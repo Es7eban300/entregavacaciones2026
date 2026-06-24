@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Documento de entrega · Esteban Castro</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,400..700&family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,400..500&family=Spline+Sans+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#f3ede1; --paper-2:#ebe3d3; --ink:#211b15; --ink-soft:#4a4036;
+  --line:#d4c9b4; --line-2:#c3b69d;
+  --accent:#b22f1c; --accent-2:#8a2415; --gold:#9a7530;
+  --ok:#3f6b4a; --warn:#b07315; --crit:#b22f1c;
+  --mono:'Spline Sans Mono',ui-monospace,monospace;
+  --serif:'Newsreader',Georgia,serif;
+  --disp:'Fraunces',Georgia,serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--paper); color:var(--ink); font-family:var(--serif);
+  font-size:18px; line-height:1.6; -webkit-font-smoothing:antialiased;
+  background-image:
+    radial-gradient(circle at 12% -10%, rgba(178,47,28,.06), transparent 40%),
+    radial-gradient(circle at 100% 0%, rgba(154,117,48,.07), transparent 45%);
+}
+body::before{
+  content:""; position:fixed; inset:0; pointer-events:none; z-index:9999; opacity:.035;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  mix-blend-mode:multiply;
+}
+.wrap{max-width:1080px; margin:0 auto; padding:0 28px}
+
+.masthead{padding:64px 0 30px; border-bottom:3px double var(--ink); position:relative}
+.top-rule{display:flex; justify-content:space-between; align-items:baseline; font-family:var(--mono); font-size:11px; letter-spacing:.18em; text-transform:uppercase; color:var(--ink-soft); padding-bottom:22px; border-bottom:1px solid var(--line); flex-wrap:wrap; gap:8px}
+.top-rule .org{color:var(--accent); font-weight:600}
+.kicker{font-family:var(--mono); font-size:12.5px; letter-spacing:.32em; text-transform:uppercase; color:var(--accent); margin:30px 0 14px; display:flex; align-items:center; gap:12px}
+.kicker::after{content:""; height:1px; flex:1; background:linear-gradient(90deg,var(--line-2),transparent)}
+h1.title{font-family:var(--disp); font-weight:600; font-size:clamp(44px,8vw,92px); line-height:.94; letter-spacing:-.02em; font-optical-sizing:auto}
+h1.title em{font-style:italic; color:var(--accent); font-weight:500}
+.subtitle{font-family:var(--serif); font-size:21px; color:var(--ink-soft); margin-top:22px; max-width:640px; font-style:italic}
+.byline{display:flex; flex-wrap:wrap; gap:26px; margin-top:30px; font-family:var(--mono); font-size:12.5px; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-soft)}
+.byline b{color:var(--ink); display:block; font-family:var(--serif); font-size:16px; letter-spacing:0; text-transform:none; margin-top:3px; font-weight:600}
+
+.callout{margin:34px 0 8px; background:var(--ink); color:var(--paper); padding:26px 30px; border-radius:2px; position:relative; overflow:hidden}
+.callout::before{content:"§"; position:absolute; right:18px; top:-14px; font-family:var(--disp); font-size:120px; color:rgba(243,237,225,.06); font-style:italic}
+.callout h3{font-family:var(--mono); font-size:11.5px; letter-spacing:.28em; text-transform:uppercase; color:var(--gold); margin-bottom:10px}
+.callout p{font-size:18px; line-height:1.55; max-width:760px}
+
+.stats{display:grid; grid-template-columns:repeat(4,1fr); gap:0; margin:40px 0; border:1px solid var(--line-2); background:var(--paper-2)}
+.stat{padding:24px 22px; border-right:1px solid var(--line-2); position:relative}
+.stat:last-child{border-right:none}
+.stat b{font-family:var(--disp); font-size:46px; font-weight:600; line-height:1; display:block; letter-spacing:-.02em}
+.stat .accent{color:var(--accent)}
+.stat span{font-family:var(--mono); font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--ink-soft); display:block; margin-top:10px}
+
+.index{margin:8px 0 50px}
+.index-h{font-family:var(--mono); font-size:11px; letter-spacing:.28em; text-transform:uppercase; color:var(--ink-soft); margin-bottom:14px}
+.index-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:2px 30px}
+.index-grid a{display:flex; align-items:baseline; gap:12px; padding:9px 4px; color:var(--ink); text-decoration:none; border-bottom:1px solid var(--line); font-size:16.5px; transition:.25s}
+.index-grid a span{font-family:var(--mono); font-size:12px; color:var(--accent); font-weight:600}
+.index-grid a:hover{color:var(--accent); padding-left:12px}
+
+.project{padding:48px 0; border-top:1px solid var(--line-2); opacity:0; transform:translateY(18px); animation:rise .7s cubic-bezier(.2,.7,.2,1) forwards; animation-delay:var(--d)}
+@keyframes rise{to{opacity:1; transform:none}}
+.p-head{display:grid; grid-template-columns:auto 1fr auto; gap:22px; align-items:start}
+.p-num{font-family:var(--disp); font-size:54px; font-weight:300; font-style:italic; color:var(--accent); line-height:.8; opacity:.9}
+.p-name{font-family:var(--disp); font-size:clamp(26px,4vw,38px); font-weight:600; letter-spacing:-.015em; line-height:1.05}
+.p-badges{display:flex; flex-wrap:wrap; gap:7px; margin-top:14px}
+.badge{font-family:var(--mono); font-size:10.5px; letter-spacing:.08em; text-transform:uppercase; padding:4px 10px; border:1px solid var(--line-2); border-radius:100px; color:var(--ink-soft); background:var(--paper)}
+.badge.front{border-color:var(--ink); color:var(--ink)}
+.badge.role{background:var(--paper-2)}
+.badge.health.ok{color:var(--ok); border-color:var(--ok)}
+.badge.health.warn{color:var(--warn); border-color:var(--warn)}
+.badge.health.crit{color:var(--crit); border-color:var(--crit)}
+.badge.prio.hi{background:var(--accent); color:var(--paper); border-color:var(--accent)}
+.badge.prio.mid{background:var(--paper-2)}
+.p-counts{display:flex; gap:0; text-align:right}
+.cnt{padding:0 16px}
+.cnt.sep{border-left:1px solid var(--line-2)}
+.cnt b{font-family:var(--disp); font-size:30px; font-weight:600; display:block; line-height:1}
+.cnt span{font-family:var(--mono); font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-soft)}
+
+.p-body{display:grid; grid-template-columns:0.85fr 1.15fr; gap:48px; margin-top:34px}
+.p-context{border-left:2px solid var(--accent); padding-left:22px}
+.field{margin-bottom:22px}
+.field-k{font-family:var(--mono); font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:var(--accent-2); display:block; margin-bottom:6px}
+.field-v{font-size:17px; line-height:1.55; color:var(--ink); white-space:pre-line}
+
+.block{margin-bottom:30px}
+.block-h{font-family:var(--mono); font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:var(--ink); display:flex; align-items:center; gap:10px; padding-bottom:11px; border-bottom:1px solid var(--line-2); margin-bottom:16px}
+.block-ic{width:20px; height:20px; border-radius:50%; display:grid; place-items:center; font-size:12px; flex:none}
+.done-ic{background:var(--ok); color:var(--paper)}
+.pend-ic{background:var(--accent); color:var(--paper); font-weight:700}
+.pend-ic.clear{background:var(--ok)}
+.doc-ic{background:var(--ink); color:var(--paper)}
+.block-n{margin-left:auto; font-family:var(--disp); font-size:18px; color:var(--ink-soft)}
+
+.list{list-style:none}
+.done-list li{display:flex; gap:12px; padding:9px 0; align-items:flex-start; border-bottom:1px dotted var(--line)}
+.tick{color:var(--ok); font-weight:700; flex:none; margin-top:2px}
+.resol{display:block; font-style:italic; color:var(--ink-soft); font-size:15px; margin-top:4px; line-height:1.45; white-space:pre-line}
+
+.pend-list li{display:flex; gap:13px; padding:13px 0; border-bottom:1px solid var(--line)}
+.dot{width:9px; height:9px; border-radius:50%; border:2px solid var(--accent); flex:none; margin-top:7px}
+.pend-body{flex:1}
+.pend-title{font-size:17.5px; display:block; line-height:1.4}
+.pend-meta{display:flex; flex-wrap:wrap; gap:7px; margin-top:8px; align-items:center}
+.due{font-family:var(--mono); font-size:11px; letter-spacing:.04em; padding:3px 9px; border-radius:3px; background:var(--paper-2); border:1px solid var(--line-2); color:var(--ink-soft)}
+.due.soon{background:#f7e6df; border-color:var(--accent); color:var(--accent-2); font-weight:600}
+.due.nodate{font-style:italic}
+.status-pill,.prio-pill{font-family:var(--mono); font-size:10px; letter-spacing:.08em; text-transform:uppercase; padding:3px 9px; border-radius:100px; border:1px solid var(--line-2); color:var(--ink-soft)}
+.prio-pill.hi{color:var(--accent); border-color:var(--accent)}
+.empty{font-style:italic; color:var(--ink-soft); font-size:16px}
+
+.docs .tech-note{font-style:italic; color:var(--ink-soft); margin-bottom:14px; font-size:16px}
+.doc-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(210px,1fr)); gap:12px}
+.doc-card{display:flex; flex-direction:column; gap:6px; padding:15px 16px; border:1px solid var(--line-2); background:var(--paper-2); text-decoration:none; color:var(--ink); border-radius:3px; transition:.22s; position:relative; overflow:hidden}
+.doc-card::after{content:""; position:absolute; left:0; top:0; bottom:0; width:3px; background:var(--accent); transform:scaleY(0); transform-origin:top; transition:.25s}
+.doc-card:hover{background:var(--paper); transform:translateY(-2px); box-shadow:0 8px 24px -12px rgba(33,27,21,.4)}
+.doc-card:hover::after{transform:scaleY(1)}
+.doc-kind{font-family:var(--mono); font-size:9.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--accent-2)}
+.doc-label{font-size:16px; line-height:1.3; font-weight:500}
+.doc-host{font-family:var(--mono); font-size:11px; color:var(--ink-soft); margin-top:auto; word-break:break-all}
+
+footer{border-top:3px double var(--ink); margin-top:30px; padding:46px 0 70px; text-align:center}
+footer .mark{font-family:var(--disp); font-style:italic; font-size:30px; color:var(--accent)}
+footer p{font-family:var(--mono); font-size:11.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--ink-soft); margin-top:14px}
+
+@media(max-width:760px){
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .stat:nth-child(2){border-right:none}
+  .stat:nth-child(-n+2){border-bottom:1px solid var(--line-2)}
+  .index-grid{grid-template-columns:1fr}
+  .p-head{grid-template-columns:1fr; gap:12px}
+  .p-counts{justify-content:flex-start; text-align:left}
+  .cnt:first-child{padding-left:0}
+  .p-body{grid-template-columns:1fr; gap:30px}
+}
+@media print{
+  body{background:#fff; font-size:12pt}
+  body::before{display:none}
+  .project{opacity:1; transform:none; animation:none; break-inside:avoid; page-break-inside:avoid}
+  .doc-card,.callout{box-shadow:none}
+  a{color:var(--ink)}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="masthead">
+    <div class="top-rule">
+      <span class="org">El Colombiano · Líder IA</span>
+      <span>Confidencial — uso interno</span>
+      <span>Vigencia: 23 jun 2026</span>
+    </div>
+    <div class="kicker">Documento de entrega · Vacaciones</div>
+    <h1 class="title">Estado de<br><em>proyectos</em></h1>
+    <p class="subtitle">Todo lo que está en curso, lo que ya quedó hecho y lo que queda pendiente — para que el equipo pueda continuar mientras estoy fuera.</p>
+    <div class="byline">
+      <span>Responsable<b>Esteban Castro</b></span>
+      <span>Rol<b>Líder IA / Desarrollo</b></span>
+      <span>Proyectos entregados<b>8 activos</b></span>
+      <span>Fecha de corte<b>junio 23, 2026</b></span>
+    </div>
+  </header>
+
+  <div class="callout">
+    <h3>Si alguien necesita algo de mí</h3>
+    <p>Antes de escribirme, revisa este documento: aquí está el contexto, el estado y los enlaces de cada proyecto. La mayoría de pendientes ya tienen responsable, fecha o están a la espera de un tercero. Si después de leerlo sigues necesitando algo urgente, deja la solicitud anotada sobre el proyecto correspondiente.</p>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><b>8</b><span>Proyectos activos</span></div>
+    <div class="stat"><b class="accent">11</b><span>Pendientes cumplidos</span></div>
+    <div class="stat"><b>9</b><span>Pendientes por hacer</span></div>
+    <div class="stat"><b>5</b><span>De prioridad alta</span></div>
+  </div>
+
+  <nav class="index">
+    <div class="index-h">Índice de proyectos</div>
+    <div class="index-grid"><a href="#p1"><span>01</span>Contextualizador - Piloto</a><a href="#p2"><span>02</span>Intelecto</a><a href="#p3"><span>03</span>Marketing Empresarial</a><a href="#p4"><span>04</span>Gobernanza IA </a><a href="#p5"><span>05</span>WordPress Multisite Conversaciones</a><a href="#p6"><span>06</span>Dashboard de métricas de lectura</a><a href="#p7"><span>07</span>Marcas aliadas V2</a><a href="#p8"><span>08</span>Proyecto Bancolombia Inmobiliaria</a></div>
+  </nav>
+
+  <main>
+
+    <section class="project" id="p1" style="--d:0s">
+      <div class="p-head">
+        <div class="p-num">01</div>
+        <div class="p-titlewrap">
+          <h2 class="p-name">Contextualizador - Piloto</h2>
+          <div class="p-badges">
+            <span class="badge front">Líder IA</span>
+            <span class="badge role">Líder</span>
+            <span class="badge status">Idea</span>
+            <span class="badge health ok">En orden</span>
+            <span class="badge prio hi">Prioridad Alta</span>
+          </div>
+        </div>
+        <div class="p-counts">
+          <div class="cnt"><b>0</b><span>hechos</span></div>
+          <div class="cnt sep"><b>1</b><span>pendientes</span></div>
+        </div>
+      </div>
+      <div class="p-body">
+        <div class="p-context">
+        <div class="field">
+          <span class="field-k">Objetivo</span>
+          <p class="field-v">Lograr un piloto de contextualizador de elcolombiano</p>
+        </div>
+        <div class="field">
+          <span class="field-k">Próximo paso</span>
+          <p class="field-v">Redescubrir el proyecto y mirar como hacer el scrapper.</p>
+        </div></div>
+        <div class="p-work">
+          
+          
+      <div class="block">
+        <h3 class="block-h"><span class="block-ic pend-ic">!</span> Pendiente por hacer <span class="block-n">1</span></h3>
+        <ul class="list pend-list">
+          <li>
+              <span class="dot"></span>
+              <div class="pend-body">
+                <span class="pend-title">Mirar como funciona el scrapper y una prueba de contexto</span>
+                <span class="pend-meta"><span class="due ">3 jul 2026 · en 10d</span><span class="status-pill">Próximo</span><span class="prio-pill mid">Media</span></span>
+              </div>
+            </li>
+        </ul>
+      </div>
+          
+        </div>
+      </div>
+    </section>
+
+    <section class="project" id="p2" style="--d:0.06s">
+      <div class="p-head">
+        <div class="p-num">02</div>
+        <div class="p-titlewrap">
+          <h2 class="p-name">Intelecto</h2>
+          <div class="p-badges">
+            <span class="badge front">Desarrollo</span>
+            <span class="badge role">Desarrollador</span>
+            <span class="badge status">Idea</span>
+            <span class="badge health warn">Requiere atención</span>
+            <span class="badge prio hi">Prioridad Alta</span>
+          </div>
+        </div>
+        <div class="p-counts">
+          <div class="cnt"><b>4</b><span>hechos</span></div>
+          <div class="cnt sep"><b>2</b><span>pendientes</span></div>
+        </div>
+      </div>
+      <div class="p-body">
+        <div class="p-context">
+        <div class="field">
+          <span class="field-k">Objetivo</span>
+          <p class="field-v">Rediseño del sitio web intelecto.</p>
+        </div>
+        <div class="field">
+          <span class="field-k">Problema de negocio</span>
+          <p class="field-v">Imagen nueva de intelecto, desarrollo nuevo</p>
+        </div>
+        <div class="field">
+          <span class="field-k">Impacto</span>
+          <p class="field-v">Mejor rendimiento en entorno web, mayor atracción de clientes</p>
+        </div>
+        <div class="field">
+          <span class="field-k">Contexto actual</span>
+          <p class="field-v">El proyecto ya está listo con todo configurado. Servidor y urls públicas. </p>
+        </div>
+        <div class="field">
+          <span class="field-k">Contexto de la app</span>
+          <p class="field-v">Desde el dominio https://intelectoapi.grupoelcolombiano.com/, se consume el API para mostrarlo en https://intelecto.grupoelcolombiano.com/
+
+Es un desarrollo que está hecho en astro con ssr
+</p>
+        </div>
+        <div class="field">
+          <span class="field-k">Próximo paso</span>
+          <p class="field-v">Pasarle accesos a la gente de editorial y luego corregir lo que nos pasaron</p>
+        </div>
+        <div class="field">
+          <span class="field-k">Próximo hito</span>
+          <p class="field-v">Migrar contenido, Hacer ultimas correcciones</p>
+        </div></div>
+        <div class="p-work">
+          
+      <div class="block">
+        <h3 class="block-h"><span class="block-ic done-ic">&#10003;</span> Lo que ya está hecho <span class="block-n">4</span></h3>
+        <ul class="list done-list">
+          <li><span class="tick">&#10003;</span><span>Desarrollo Api lista</span></li><li><span class="tick">&#10003;</span><span>Desarrollo front listo</span></li>
+          <li><span class="tick">&#10003;</span><span><strong>Pasarle accesos de las dos URLS a los editores - Intelecto</strong></span></li><li><span class="tick">&#10003;</span><span><strong>Manual tecnico, medidas imagenes, hacer páginas faltantes</strong><em class="resol">Se hizo un HTML con la documentación de tamaño de las imagenes. 
+
+Quedó en esta ruta: 
+https://intelectoapi.grupoelcolombiano.com/tamano-de-imagenes/</em></span></li>
+        </ul>
+      </div>
+          
+      <div class="block">
+        <h3 class="block-h"><span class="block-ic pend-ic">!</span> Pendiente por hacer <span class="block-n">2</span></h3>
+        <ul class="list pend-list">
+          <li>
+              <span class="dot"></span>
+              <div class="pend-body">
+                <span class="pend-title">Corregir sliders de intelecto</span>
+                <span class="pend-meta"><span class="due soon">26 jun 2026 · en 3d</span><span class="status-pill">Próximo</span><span class="prio-pill mid">Media</span></span>
+              </div>
+            </li><li>
+              <span class="dot"></span>
+              <div class="pend-body">
+                <span class="pend-title">Hay que pasarle los espacios de pauta a Manotas</span>
+                <span class="pend-meta"><span class="due soon">30 jun 2026 · en 7d</span><span class="status-pill">Próximo</span><span class="prio-pill mid">Media</span></span>
+              </div>
+            </li>
+        </ul>
+      </div>
+          
+      <div class="block docs">
+        <h3 class="block-h"><span class="block-ic doc-ic">&para;</span> Documentación y enlaces</h3>
+        
+        <div class="doc-grid">
+          <a class="doc-card" href="https://intelectoapi.grupoelcolombiano.com/tamano-de-imagenes/" target="_blank" rel="noopener">
+            <span class="doc-kind">Blog o internet</span>
+            <span class="doc-label">Tamaño de imagenes</span>
+            <span class="doc-host">intelectoapi.grupoelcolombiano.com &#8599;</span>
+          </a><a class="doc-card" href="https://teams.cloud.microsoft/l/meetingrecap?driveId=b%21s2zsYNRhhUuATbvjjyuIo7Dn0d-_xsVFnz2ExvFZ3JtbFrT-Yrb6R6tacsaex1r0&amp;driveItemId=01XSAZE7FZXG5J5DZFMRE23KUWMML55TID&amp;sitePath=https%3A%2F%2Fepublicidad-my.sharepoint.com%2F%3Av%3A%2Fg%2Fpersonal%2Fsantiagolo_elcolombiano_com_co%2FIQC5ubqejyVkSa2qlmMX3s0DAWAx164XuS-9zwG7pv19ado&amp;fileUrl=https%3A%2F%2Fepublicidad-my.sharepoint.com%2Fpersonal%2Fsantiagolo_elcolombiano_com_co%2FDocuments%2FGrabaciones%2FCapacitaci%C3%B3n+nuevo+sitio+Intelecto-20260603_150519-Grabaci%C3%B3n+de+la+reuni%C3%B3n.mp4%3Fweb%3D1&amp;iCalUid=040000008200E00074C5B7101A82E0080000000090C1CC9526EDDC01000000000000000010000000F8DF1DFB5D069F4292840790125B9A00&amp;threadId=19%3Ameeting_NDAzODBhYTEtOGIwOS00ZGM3LWI0YWQtYmVkNGMwMjEyNTEz%40thread.v2&amp;organizerId=b1dd39aa-88a2-45a0-a71e-c4433d65c798&amp;tenantId=1fbebb3e-db58-4393-90bd-9269ebe0acf4&amp;callId=ea2240e5-747e-447f-b48b-9734c0224aac&amp;threadType=Meeting&amp;meetingType=Scheduled&amp;subType=RecapSharingLink_RecapCore" target="_blank" rel="noopener">
+            <span class="doc-kind">Video</span>
+            <span class="doc-label">Capacitación numero 1</span>
+            <span class="doc-host">teams.cloud.microsoft &#8599;</span>
+          </a><a class="doc-card" href="https://teams.cloud.microsoft/l/meetingrecap?driveId=b%21s2zsYNRhhUuATbvjjyuIo7Dn0d-_xsVFnz2ExvFZ3JtbFrT-Yrb6R6tacsaex1r0&amp;driveItemId=01XSAZE7BVINPZZTQO2BCLWSFITG5SWHWA&amp;sitePath=https%3A%2F%2Fepublicidad-my.sharepoint.com%2Fpersonal%2Fsantiagolo_elcolombiano_com_co%2FDocuments%2FGrabaciones%2FCapacitaci%C3%B3n+nuevo+sitio+Intelecto-20260610_103307-Grabaci%C3%B3n+de+la+reuni%C3%B3n+1.mp4&amp;fileUrl=https%3A%2F%2Fepublicidad-my.sharepoint.com%2Fpersonal%2Fsantiagolo_elcolombiano_com_co%2FDocuments%2FGrabaciones%2FCapacitaci%C3%B3n+nuevo+sitio+Intelecto-20260610_103307-Grabaci%C3%B3n+de+la+reuni%C3%B3n+1.mp4%3Fweb%3D1&amp;iCalUid=040000008200E00074C5B7101A82E0080000000090C1CC9526EDDC01000000000000000010000000F8DF1DFB5D069F4292840790125B9A00&amp;threadId=19%3Ameeting_NDAzODBhYTEtOGIwOS00ZGM3LWI0YWQtYmVkNGMwMjEyNTEz%40thread.v2&amp;organizerId=b1dd39aa-88a2-45a0-a71e-c4433d65c798&amp;tenantId=1fbebb3e-db58-4393-90bd-9269ebe0acf4&amp;callId=9c426f4c-710c-4235-94eb-6d60607b8450&amp;threadType=Meeting&amp;meetingType=Scheduled&amp;subType=RecapSharingLink_RecapCore" target="_blank" rel="noopener">
+            <span class="doc-kind">Video</span>
+            <span class="doc-label">Capacitación numero 2</span>
+            <span class="doc-host">teams.cloud.microsoft &#8599;</span>
+          </a><a class="doc-card" href="https://intelectoapi.grupoelcolombiano.com/tamano-de-imagenes/" target="_blank" rel="noopener">
+            <span class="doc-kind">Doc</span>
+            <span class="doc-label">Documentación técnica</span>
+            <span class="doc-host">intelectoapi.grupoelcolombiano.com &#8599;</span>
+          </a>
+        </div>
+      </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="project" id="p3" style="--d:0.12s">
+      <div class="p-head">
+        <div class="p-num">03</div>
+        <div class="p-titlewrap">
+          <h2 class="p-name">Marketing Empresarial</h2>
+          <div class="p-badges">
+            <span class="badge front">Líder IA</span>
+            <span class="badge role">Líder</span>
+            <span class="badge status">Planeación</span>
+            <span class="badge health ok">En orden</span>
+            <span class="badge prio hi">Prioridad Alta</span>
+          </div>
+        </div>
+        <div class="p-counts">
+          <div class="cnt"><b>3</b><span>hechos</span></div>
+          <div class="cnt sep"><b>1</b><span>pendientes</span></div>
+        </div>
+      </div>
+      <div class="p-body">
+        <div class="p-context">
+        <div class="field">
+          <span class="field-k">Objetivo</span>
+          <p class="field-v">El objetivo de este proyecto es lograr tener una aplicación sólida para el manejo de nuestro sistema de whatsapp. 
+
+Sistema de campañas outbound y demás.</p>
+        </div>
+        <div class="field">
+          <span class="field-k">Contexto actual</span>
+          <p class="field-v">Se pasó un spike para elegir un BSP. Ya está parobado el MVP.
+
+Estamos escogiendo el bsp adecuado y el proximo paso es reunirnos con los proveedores para mirar cuál es la mejor opción viendo el software. 
+
+Pendiente pool de preguntas también
+
+
+Carpeta que contiene los archivos: 
+
+https://epublicidad-my.sharepoint.com/:f:/g/personal/estebancr_elcolombiano_com_co/IgBfvSMkwm8eSJ43Ccq7PelrAXBGKsHBRwducA8h1kfhffQ?e=lrdUCY</p>
+        </div>
+        <div class="field">
+          <span class="field-k">Próximo paso</span>
+          <p class="field-v">Escoger el BSP adecuado.</p>
+        </div>
+        <div class="field">
+          <span class="field-k">Próximo hito</span>
+          <p class="field-v">Escoger el BSP adecuado</p>
+        </div></div>
+        <div class="p-work">
+          
+      <div class="block">
+        <h3 class="block-h"><span class="block-ic done-ic">&#10003;</span> Lo que ya está hecho <span class="block-n">3</span></h3>
+        <ul class="list done-list">
+          <li><span class="tick">&#10003;</span><span>Iinicialización de fase 0. Investigación.</span></li>
+          <li><span class="tick">&#10003;</span><span><strong>Presentar el MVP</strong><em class="resol">Se presentó el MVP.
+
+Se aprobó el MVP y se inicia fase 0: Descubrir el BSP que tenga todo lo necesario, o al menos lo importante.</em></span></li><li><span class="tick">&#10003;</span><span><strong>Investigación de BSP - Rúbrica de decisión</strong></span></li>
+        </ul>
+      </div>
+          
+      <div class="block">
+        <h3 class="block-h"><span class="block-ic pend-ic">!</span> Pendiente por hacer <span class="block-n">1</span></h3>
+        <ul class="list pend-list">
+          <li>
+              <span class="dot"></span>
+              <div class="pend-body">
+                <span class="pend-title">Buscar los proveedores para conocer el software</span>
+                <span class="pend-meta"><span class="due soon">26 jun 2026 · en 3d</span><span class="status-pill">Próximo</span><span class="prio-pill mid">Media</span></span>
+              </div>
+            </li>
+        </ul>
+      </div>
+          
+      <div class="block docs">
+        <h3 class="block-h"><span class="block-ic doc-ic">&para;</span> Documentación y enlaces</h3>
+        
+        <div class="doc-grid">
+          <a class="doc-card" href="https://www.youtube.com/watch?v=Tj6oee3XyZk" target="_blank" rel="noopener">
+            <span class="doc-kind">Video</span>
+            <span class="doc-label">Construir propio log con claude code</span>
+            <span class="doc-host">youtube.com &#8599;</span>
+          </a><a class="doc-card" href="https://epublicidad-my.sharepoint.com/:p:/g/personal/estebancr_elcolombiano_com_co/IQC8jz9DkioERJgu9nwRNr8YATEP5Zja4Z9wyKNb5Yly_4Q?e=N1gR7J" target="_blank" rel="noopener">
+            <span class="doc-kind">Power point</span>
+            <span class="doc-label">Presentación del MVP</span>
+            <span class="doc-host">epublicidad-my.sharepoint.com &#8599;</span>
+          </a><a class="doc-card" href="https://epublicidad-my.sharepoint.com/:f:/g/personal/estebancr_elcolombiano_com_co/IgBfvSMkwm8eSJ43Ccq7PelrAXBGKsHBRwducA8h1kfhffQ?e=lrdUCY" target="_blank" rel="noopener">
+            <span class="doc-kind">Archivos</span>
+            <span class="doc-label">Carpeta de archivos</span>
+            <span class="doc-host">epublicidad-my.sharepoint.com &#8599;</span>
+          </a>
+        </div>
+      </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="project" id="p4" style="--d:0.18s">
+      <div class="p-head">
+        <div class="p-num">04</div>
+        <div class="p-titlewrap">
+          <h2 class="p-name">Gobernanza IA </h2>
+          <div class="p-badges">
+            <span class="badge front">Líder IA</span>
+            <span class="badge role">Líder</span>
+            <span class="badge status">Planeación</span>
+            <span class="badge health ok">En orden</span>
+            <span class="badge prio hi">Prioridad Alta</span>
+          </div>
+        </div>
+        <div class="p-counts">
+          <div class="cnt"><b>2</b><span>hechos</span></div>
+          <div class="cnt sep"><b>1</b><span>pendientes</span></div>
+        </div>
+      </div>
+      <div class="p-body">
+        <div class="p-context">
+        <div class="field">
+          <span class="field-k">Objetivo</span>
+          <p class="field-v">Este proyecto busca establecer una gobernanza de la Inteligencia Artificial dentro de la empresa</p>
+        </div>
+        <div class="field">
+          <span class="field-k">Problema de negocio</span>
+          <p class="field-v">Que la gente use la IA como le de la gana e implementaciones sanas de la Inteligencia Artificial en la empresa</p>
+        </div>
+        <div class="field">
+          <span class="field-k">Impacto</span>
+          <p class="field-v">Menos shadow IA. Mejor uso de la inteligencia Artificial</p>
+        </div>
+        <div class="field">
+          <span class="field-k">Contexto actual</span>
+          <p class="field-v">Tenemos un proyecto de gobernanza y también una encuesta de quién usa la inteligencia artificial.
+</p>
+        </div>
+        <div class="field">
+          <span class="field-k">Próximo paso</span>
+          <p class="field-v">El proximo paso es presentar lo que se obtuvo de la encuesta y unos quick wins para ir implementando la gobernanza</p>
+        </div></div>
+        <div class="p-work">
+          
+      <div class="block">
+        <h3 class="block-h"><span class="block-ic done-ic">&#10003;</span> Lo que ya está hecho <span class="block-n">2</span></h3>
+        <ul class="list done-list">
+          
+          <li><span class="tick">&#10003;</span><span><strong>Revisar y presentar la presentación</strong></span></li><li><span class="tick">&#10003;</span><span><strong>Hacer la estructura del semáforo - Presentar la encuesta con los datos nuevos</strong></span></li>
+        </ul>
+      </div>
+          
+      <div class="block">
+        <h3 class="block-h"><span class="block-ic pend-ic">!</span> Pendiente por hacer <span class="block-n">1</span></h3>
+        <ul class="list pend-list">
+          <li>
+              <span class="dot"></span>
+              <div class="pend-body">
+                <span class="pend-title">Empezar el piloto del semáforo - Conocer nuevos datos de encuesta</span>
+                <span class="pend-meta"><span class="due ">1 jul 2026 · en 8d</span><span class="status-pill">Próximo</span><span class="prio-pill mid">Media</span></span>
+              </div>
+            </li>
+        </ul>
+      </div>
+          
+      <div class="block docs">
+        <h3 class="block-h"><span class="block-ic doc-ic">&para;</span> Documentación y enlaces</h3>
+        
+        <div class="doc-grid">
+          <a class="doc-card" href="https://epublicidad-my.sharepoint.com/:p:/g/personal/estebancr_elcolombiano_com_co/IQDJclwdhmxES7aDxP2BlNlZAQmy414f00b-YrKFngEQChk?e=0qNJuP" target="_blank" rel="noopener">
+            <span class="doc-kind">Power point</span>
+            <span class="doc-label">Presentación gobernanza IA</span>
+            <span class="doc-host">epublicidad-my.sharepoint.com &#8599;</span>
+          </a><a class="doc-card" href="https://epublicidad-my.sharepoint.com/:w:/g/personal/estebancr_elcolombiano_com_co/IQB6NqoTf7hERbgxQMW_nW9OAYmt6WkNZXG_XLKuwz0gnwo?e=2GttLJ" target="_blank" rel="noopener">
+            <span class="doc-kind">doc</span>
+            <span class="doc-label">Semáforo arquitectura</span>
+            <span class="doc-host">epublicidad-my.sharepoint.com &#8599;</span>
+          </a>
+        </div>
+      </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="project" id="p5" style="--d:0.24s">
+      <div class="p-head">
+        <div class="p-num">05</div>
+        <div class="p-titlewrap">
+          <h2 class="p-name">WordPress Multisite Conversaciones</h2>
+          <div class="p-badges">
+            <span class="badge front">Desarrollo</span>
+            <span class="badge role">Desarrollador</span>
+            <span class="badge status">En curso</span>
+            <span class="badge health warn">Requiere atención</span>
+            <span class="badge prio hi">Prioridad Alta</span>
+          </div>
+        </div>
+        <div class="p-counts">
+          <div class="cnt"><b>4</b><span>hechos</span></div>
+          <div class="cnt sep"><b>1</b><span>pendientes</span></div>
+        </div>
+      </div>
+      <div class="p-body">
+        <div class="p-context">
+        <div class="field">
+          <span class="field-k">Objetivo</span>
+          <p class="field-v">Migrar y consolidar los 4 sitios de Conversaciones bajo una arquitectura WordPress Multisite.</p>
+        </div>
+        <div class="field">
+          <span class="field-k">Contexto actual</span>
+          <p class="field-v">Ya el sitio está migrado y en funcionamiento. 
+Falta hacer la redirección de las urls viejas a las urls nuevas</p>
+        </div>
+        <div class="field">
+          <span class="field-k">Próximo paso</span>
+          <p class="field-v">Subir contenido a la nueva revista</p>
+        </div>
+        <div class="field">
+          <span class="field-k">Próximo hito</span>
+          <p class="field-v">Hacer redirecciones de urls viejas a las urls nuevas</p>
+        </div></div>
+        <div class="p-work">
+          
+      <div class="block">
+        <h3 class="block-h"><span class="block-ic done-ic">&#10003;</span> Lo que ya está hecho <span class="block-n">4</span></h3>
+        <ul class="list done-list">
+          <li><span class="tick">&#10003;</span><span>Ya el sitio está migrado y en funcionamiento.</span></li><li><span class="tick">&#10003;</span><span>Falta hacer la redirección de las urls viejas a las urls nuevas</span></li>
+          <li><span class="tick">&#10003;</span><span><strong>Pegar el prompt para hacer el plugin cuando tenga las imagenes de referencia</strong><em class="resol">El plugin está listo. 
+
+Se llama EAFIT quiz. Y ya las notas también subieron con el quiz, las notas que estaban pendientes están ok 
+</em></span></li><li><span class="tick">&#10003;</span><span><strong>Enseñarle a Santiago a pasar las preguntas y quiz</strong></span></li>
+        </ul>
+      </div>
+          
+      <div class="block">
+        <h3 class="block-h"><span class="block-ic pend-ic">!</span> Pendiente por hacer <span class="block-n">1</span></h3>
+        <ul class="list pend-list">
+          <li>
+              <span class="dot"></span>
+              <div class="pend-body">
+                <span class="pend-title">Pasar las nuevas notas que se están desarrollando</span>
+                <span class="pend-meta"><span class="due ">2 jul 2026 · en 9d</span><span class="status-pill">Próximo</span><span class="prio-pill mid">Media</span></span>
+              </div>
+            </li>
+        </ul>
+      </div>
+          
+      <div class="block docs">
+        <h3 class="block-h"><span class="block-ic doc-ic">&para;</span> Documentación y enlaces</h3>
+        
+        <div class="doc-grid">
+          <a class="doc-card" href="https://epublicidad-my.sharepoint.com/:w:/r/personal/estebancr_elcolombiano_com_co/_layouts/15/Doc.aspx?sourcedoc=%7B86AF953A-76C5-4B13-ABE4-D85D2C2FFD92%7D&amp;file=Quices.docx&amp;action=default&amp;mobileredirect=true&amp;wdOrigin=OFFICEDOTCOM.SHELL%2CAPPHOME-WEB.BANNER.UPLOAD&amp;wdPreviousSession=f8dc58b2-d04c-4954-8980-474185885f3b&amp;wdPreviousSessionSrc=AppHomeWeb&amp;ct=1781918422061" target="_blank" rel="noopener">
+            <span class="doc-kind">Blog o internet</span>
+            <span class="doc-label">Documento quices y logica</span>
+            <span class="doc-host">epublicidad-my.sharepoint.com &#8599;</span>
+          </a><a class="doc-card" href="https://epublicidad-my.sharepoint.com/:x:/r/personal/estebancr_elcolombiano_com_co/_layouts/15/Doc.aspx?sourcedoc=%7B0098245C-AD7C-4CC8-85F0-069A941B9D6D%7D&amp;file=Eafit%20-%20Migraci%C3%B3n%20de%20notas.xlsx&amp;action=default&amp;mobileredirect=true&amp;DefaultItemOpen=1&amp;wdOrigin=OFFICECOM-WEB.APPGALLERY%2CAPPHOME-WEB.FILEBROWSER.RECENT&amp;wdPreviousSession=5e19b76e-5210-4bac-ab83-abc61fff9a26&amp;wdPreviousSessionSrc=AppHomeWeb&amp;ct=1782252584339" target="_blank" rel="noopener">
+            <span class="doc-kind">excel</span>
+            <span class="doc-label">URL sitio pasado</span>
+            <span class="doc-host">epublicidad-my.sharepoint.com &#8599;</span>
+          </a>
+        </div>
+      </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="project" id="p6" style="--d:0.3s">
+      <div class="p-head">
+        <div class="p-num">06</div>
+        <div class="p-titlewrap">
+          <h2 class="p-name">Dashboard de métricas de lectura</h2>
+          <div class="p-badges">
+            <span class="badge front">Líder IA</span>
+            <span class="badge role">Líder</span>
+            <span class="badge status">En curso</span>
+            <span class="badge health warn">Requiere atención</span>
+            <span class="badge prio mid">Prioridad Media</span>
+          </div>
+        </div>
+        <div class="p-counts">
+          <div class="cnt"><b>1</b><span>hechos</span></div>
+          <div class="cnt sep"><b>0</b><span>pendientes</span></div>
+        </div>
+      </div>
+      <div class="p-body">
+        <div class="p-context">
+        <div class="field">
+          <span class="field-k">Objetivo</span>
+          <p class="field-v">Construir una fuente confiable de métricas reales de lectura para potenciar las decisiones del equipo editorial.</p>
+        </div>
+        <div class="field">
+          <span class="field-k">Próximo paso</span>
+          <p class="field-v">El equipo editorial no tiene visibilidad sobre cómo se consumen realmente los artículos. Las decisiones se toman con datos parciales de GA4 que no reflejan lectura real.</p>
+        </div></div>
+        <div class="p-work">
+          
+      <div class="block">
+        <h3 class="block-h"><span class="block-ic done-ic">&#10003;</span> Lo que ya está hecho <span class="block-n">1</span></h3>
+        <ul class="list done-list">
+          
+          <li><span class="tick">&#10003;</span><span><strong>Corregir lo que nos pasó Laura</strong><em class="resol">Eso no es un error. Se validó que lo que no le cuadra son las métricas. Pero nada. Siento que van a seguir saliendo cosas así pero ya lo volveré proyecto</em></span></li>
+        </ul>
+      </div>
+          
+      <div class="block">
+        <h3 class="block-h"><span class="block-ic pend-ic clear">&#10003;</span> Pendiente por hacer <span class="block-n">0</span></h3>
+        <p class="empty">Sin pendientes abiertos. Al día.</p>
+      </div>
+          
+        </div>
+      </div>
+    </section>
+
+    <section class="project" id="p7" style="--d:0.36s">
+      <div class="p-head">
+        <div class="p-num">07</div>
+        <div class="p-titlewrap">
+          <h2 class="p-name">Marcas aliadas V2</h2>
+          <div class="p-badges">
+            <span class="badge front">Desarrollo</span>
+            <span class="badge role">Desarrollador</span>
+            <span class="badge status">En curso</span>
+            <span class="badge health ok">En orden</span>
+            <span class="badge prio mid">Prioridad Media</span>
+          </div>
+        </div>
+        <div class="p-counts">
+          <div class="cnt"><b>1</b><span>hechos</span></div>
+          <div class="cnt sep"><b>2</b><span>pendientes</span></div>
+        </div>
+      </div>
+      <div class="p-body">
+        <div class="p-context">
+        <div class="field">
+          <span class="field-k">Objetivo</span>
+          <p class="field-v">Migrar un desarrollo hecho en wordpress para su propia administración </p>
+        </div>
+        <div class="field">
+          <span class="field-k">Próximo paso</span>
+          <p class="field-v">Mostrarles en la capacitación como funciona el sitio</p>
+        </div></div>
+        <div class="p-work">
+          
+      <div class="block">
+        <h3 class="block-h"><span class="block-ic done-ic">&#10003;</span> Lo que ya está hecho <span class="block-n">1</span></h3>
+        <ul class="list done-list">
+          
+          <li><span class="tick">&#10003;</span><span><strong>Corregir filtro y paginación de marcas aliadas y subir favicon</strong></span></li>
+        </ul>
+      </div>
+          
+      <div class="block">
+        <h3 class="block-h"><span class="block-ic pend-ic">!</span> Pendiente por hacer <span class="block-n">2</span></h3>
+        <ul class="list pend-list">
+          <li>
+              <span class="dot"></span>
+              <div class="pend-body">
+                <span class="pend-title">Pegar formulario para nuevas marcas - No lo han pasado</span>
+                <span class="pend-meta"><span class="due ">1 jul 2026 · en 8d</span><span class="status-pill">Próximo</span><span class="prio-pill mid">Media</span></span>
+              </div>
+            </li><li>
+              <span class="dot"></span>
+              <div class="pend-body">
+                <span class="pend-title">Reunión de capacitación con Contenido</span>
+                <span class="pend-meta"><span class="due nodate">sin fecha</span><span class="status-pill">Esperando respuesta</span><span class="prio-pill mid">Media</span></span>
+              </div>
+            </li>
+        </ul>
+      </div>
+          
+        </div>
+      </div>
+    </section>
+
+    <section class="project" id="p8" style="--d:0.42s">
+      <div class="p-head">
+        <div class="p-num">08</div>
+        <div class="p-titlewrap">
+          <h2 class="p-name">Proyecto Bancolombia Inmobiliaria</h2>
+          <div class="p-badges">
+            <span class="badge front">Líder IA</span>
+            <span class="badge role">Desarrollador</span>
+            <span class="badge status">En curso</span>
+            <span class="badge health ok">En orden</span>
+            <span class="badge prio mid">Prioridad Media</span>
+          </div>
+        </div>
+        <div class="p-counts">
+          <div class="cnt"><b>1</b><span>hechos</span></div>
+          <div class="cnt sep"><b>1</b><span>pendientes</span></div>
+        </div>
+      </div>
+      <div class="p-body">
+        <div class="p-context">
+        <div class="field">
+          <span class="field-k">Objetivo</span>
+          <p class="field-v">Integrar todo lo de tu360inmobiliario</p>
+        </div>
+        <div class="field">
+          <span class="field-k">Contexto actual</span>
+          <p class="field-v">Existe el scrapper y existe todo lo demás del desarrollo pero falta definir el formulario para las propiedades y para ponerle perfil al usuario</p>
+        </div>
+        <div class="field">
+          <span class="field-k">Próximo paso</span>
+          <p class="field-v">Definir fomrulario y perfil de usuario para hacer la aplicación</p>
+        </div></div>
+        <div class="p-work">
+          
+      <div class="block">
+        <h3 class="block-h"><span class="block-ic done-ic">&#10003;</span> Lo que ya está hecho <span class="block-n">1</span></h3>
+        <ul class="list done-list">
+          
+          <li><span class="tick">&#10003;</span><span><strong>Reunión con Deivy para Test Coba</strong></span></li>
+        </ul>
+      </div>
+          
+      <div class="block">
+        <h3 class="block-h"><span class="block-ic pend-ic">!</span> Pendiente por hacer <span class="block-n">1</span></h3>
+        <ul class="list pend-list">
+          <li>
+              <span class="dot"></span>
+              <div class="pend-body">
+                <span class="pend-title">Pasan la caracterización de usuario y el formulario para terminar el desarrollo</span>
+                <span class="pend-meta"><span class="due soon">30 jun 2026 · en 7d</span><span class="status-pill">Próximo</span><span class="prio-pill mid">Media</span></span>
+              </div>
+            </li>
+        </ul>
+      </div>
+          
+      <div class="block docs">
+        <h3 class="block-h"><span class="block-ic doc-ic">&para;</span> Documentación y enlaces</h3>
+        <p class="tech-note">No existe documentación técnica</p>
+        <div class="doc-grid">
+          <a class="doc-card" href="https://www.perplexity.ai/computer/a/ffcadf3c-ce0b-568e-ab4e-8770b25ff001" target="_blank" rel="noopener">
+            <span class="doc-kind">Blog o internet</span>
+            <span class="doc-label">Link del formulario clasificación</span>
+            <span class="doc-host">perplexity.ai &#8599;</span>
+          </a>
+        </div>
+      </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="mark">Todo queda en orden. Tu tranquilo</div>
+  </footer>
+
+</div>
+</body>
+</html>
