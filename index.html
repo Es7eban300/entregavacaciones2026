@@ -1,793 +1,712 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Documento de entrega · Esteban Castro</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,400..700&family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,400..500&family=Spline+Sans+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tommy · Guía de tratamiento y dieta · Fase 1</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,900&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
 <style>
 :root{
-  --paper:#f3ede1; --paper-2:#ebe3d3; --ink:#211b15; --ink-soft:#4a4036;
-  --line:#d4c9b4; --line-2:#c3b69d;
-  --accent:#b22f1c; --accent-2:#8a2415; --gold:#9a7530;
-  --ok:#3f6b4a; --warn:#b07315; --crit:#b22f1c;
-  --mono:'Spline Sans Mono',ui-monospace,monospace;
-  --serif:'Newsreader',Georgia,serif;
-  --disp:'Fraunces',Georgia,serif;
+  --ink:#22201d;
+  --ink-soft:#5c574f;
+  --paper:#faf7f2;
+  --card:#ffffff;
+  --line:#e5ded2;
+  --moss:#3f6b4f;
+  --moss-soft:#e8f0e9;
+  --amber:#b57a1d;
+  --amber-soft:#fdf1dc;
+  --brick:#a83c30;
+  --brick-soft:#fbe7e4;
+  --ocean:#2f5f7a;
+  --ocean-soft:#e5eff4;
+  --shadow:0 1px 2px rgba(34,32,29,.05), 0 8px 24px -12px rgba(34,32,29,.18);
 }
 *{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
 body{
-  background:var(--paper); color:var(--ink); font-family:var(--serif);
-  font-size:18px; line-height:1.6; -webkit-font-smoothing:antialiased;
-  background-image:
-    radial-gradient(circle at 12% -10%, rgba(178,47,28,.06), transparent 40%),
-    radial-gradient(circle at 100% 0%, rgba(154,117,48,.07), transparent 45%);
+  background:var(--paper);
+  color:var(--ink);
+  font-family:'Inter',system-ui,sans-serif;
+  font-size:15px;
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
 }
-body::before{
-  content:""; position:fixed; inset:0; pointer-events:none; z-index:9999; opacity:.035;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  mix-blend-mode:multiply;
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px 100px}
+
+/* ---------- HERO ---------- */
+header.hero{
+  border-bottom:1px solid var(--line);
+  background:linear-gradient(180deg,#fffdf9,var(--paper));
+  padding:44px 0 30px;
+  margin-bottom:26px;
 }
-.wrap{max-width:1080px; margin:0 auto; padding:0 28px}
-
-.masthead{padding:64px 0 30px; border-bottom:3px double var(--ink); position:relative}
-.top-rule{display:flex; justify-content:space-between; align-items:baseline; font-family:var(--mono); font-size:11px; letter-spacing:.18em; text-transform:uppercase; color:var(--ink-soft); padding-bottom:22px; border-bottom:1px solid var(--line); flex-wrap:wrap; gap:8px}
-.top-rule .org{color:var(--accent); font-weight:600}
-.kicker{font-family:var(--mono); font-size:12.5px; letter-spacing:.32em; text-transform:uppercase; color:var(--accent); margin:30px 0 14px; display:flex; align-items:center; gap:12px}
-.kicker::after{content:""; height:1px; flex:1; background:linear-gradient(90deg,var(--line-2),transparent)}
-h1.title{font-family:var(--disp); font-weight:600; font-size:clamp(44px,8vw,92px); line-height:.94; letter-spacing:-.02em; font-optical-sizing:auto}
-h1.title em{font-style:italic; color:var(--accent); font-weight:500}
-.subtitle{font-family:var(--serif); font-size:21px; color:var(--ink-soft); margin-top:22px; max-width:640px; font-style:italic}
-.byline{display:flex; flex-wrap:wrap; gap:26px; margin-top:30px; font-family:var(--mono); font-size:12.5px; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-soft)}
-.byline b{color:var(--ink); display:block; font-family:var(--serif); font-size:16px; letter-spacing:0; text-transform:none; margin-top:3px; font-weight:600}
-
-.callout{margin:34px 0 8px; background:var(--ink); color:var(--paper); padding:26px 30px; border-radius:2px; position:relative; overflow:hidden}
-.callout::before{content:"§"; position:absolute; right:18px; top:-14px; font-family:var(--disp); font-size:120px; color:rgba(243,237,225,.06); font-style:italic}
-.callout h3{font-family:var(--mono); font-size:11.5px; letter-spacing:.28em; text-transform:uppercase; color:var(--gold); margin-bottom:10px}
-.callout p{font-size:18px; line-height:1.55; max-width:760px}
-
-.stats{display:grid; grid-template-columns:repeat(4,1fr); gap:0; margin:40px 0; border:1px solid var(--line-2); background:var(--paper-2)}
-.stat{padding:24px 22px; border-right:1px solid var(--line-2); position:relative}
-.stat:last-child{border-right:none}
-.stat b{font-family:var(--disp); font-size:46px; font-weight:600; line-height:1; display:block; letter-spacing:-.02em}
-.stat .accent{color:var(--accent)}
-.stat span{font-family:var(--mono); font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--ink-soft); display:block; margin-top:10px}
-
-.index{margin:8px 0 50px}
-.index-h{font-family:var(--mono); font-size:11px; letter-spacing:.28em; text-transform:uppercase; color:var(--ink-soft); margin-bottom:14px}
-.index-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:2px 30px}
-.index-grid a{display:flex; align-items:baseline; gap:12px; padding:9px 4px; color:var(--ink); text-decoration:none; border-bottom:1px solid var(--line); font-size:16.5px; transition:.25s}
-.index-grid a span{font-family:var(--mono); font-size:12px; color:var(--accent); font-weight:600}
-.index-grid a:hover{color:var(--accent); padding-left:12px}
-
-.project{padding:48px 0; border-top:1px solid var(--line-2); opacity:0; transform:translateY(18px); animation:rise .7s cubic-bezier(.2,.7,.2,1) forwards; animation-delay:var(--d)}
-@keyframes rise{to{opacity:1; transform:none}}
-.p-head{display:grid; grid-template-columns:auto 1fr auto; gap:22px; align-items:start}
-.p-num{font-family:var(--disp); font-size:54px; font-weight:300; font-style:italic; color:var(--accent); line-height:.8; opacity:.9}
-.p-name{font-family:var(--disp); font-size:clamp(26px,4vw,38px); font-weight:600; letter-spacing:-.015em; line-height:1.05}
-.p-badges{display:flex; flex-wrap:wrap; gap:7px; margin-top:14px}
-.badge{font-family:var(--mono); font-size:10.5px; letter-spacing:.08em; text-transform:uppercase; padding:4px 10px; border:1px solid var(--line-2); border-radius:100px; color:var(--ink-soft); background:var(--paper)}
-.badge.front{border-color:var(--ink); color:var(--ink)}
-.badge.role{background:var(--paper-2)}
-.badge.health.ok{color:var(--ok); border-color:var(--ok)}
-.badge.health.warn{color:var(--warn); border-color:var(--warn)}
-.badge.health.crit{color:var(--crit); border-color:var(--crit)}
-.badge.prio.hi{background:var(--accent); color:var(--paper); border-color:var(--accent)}
-.badge.prio.mid{background:var(--paper-2)}
-.p-counts{display:flex; gap:0; text-align:right}
-.cnt{padding:0 16px}
-.cnt.sep{border-left:1px solid var(--line-2)}
-.cnt b{font-family:var(--disp); font-size:30px; font-weight:600; display:block; line-height:1}
-.cnt span{font-family:var(--mono); font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-soft)}
-
-.p-body{display:grid; grid-template-columns:0.85fr 1.15fr; gap:48px; margin-top:34px}
-.p-context{border-left:2px solid var(--accent); padding-left:22px}
-.field{margin-bottom:22px}
-.field-k{font-family:var(--mono); font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:var(--accent-2); display:block; margin-bottom:6px}
-.field-v{font-size:17px; line-height:1.55; color:var(--ink); white-space:pre-line}
-
-.block{margin-bottom:30px}
-.block-h{font-family:var(--mono); font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:var(--ink); display:flex; align-items:center; gap:10px; padding-bottom:11px; border-bottom:1px solid var(--line-2); margin-bottom:16px}
-.block-ic{width:20px; height:20px; border-radius:50%; display:grid; place-items:center; font-size:12px; flex:none}
-.done-ic{background:var(--ok); color:var(--paper)}
-.pend-ic{background:var(--accent); color:var(--paper); font-weight:700}
-.pend-ic.clear{background:var(--ok)}
-.doc-ic{background:var(--ink); color:var(--paper)}
-.block-n{margin-left:auto; font-family:var(--disp); font-size:18px; color:var(--ink-soft)}
-
-.list{list-style:none}
-.done-list li{display:flex; gap:12px; padding:9px 0; align-items:flex-start; border-bottom:1px dotted var(--line)}
-.tick{color:var(--ok); font-weight:700; flex:none; margin-top:2px}
-.resol{display:block; font-style:italic; color:var(--ink-soft); font-size:15px; margin-top:4px; line-height:1.45; white-space:pre-line}
-
-.pend-list li{display:flex; gap:13px; padding:13px 0; border-bottom:1px solid var(--line)}
-.dot{width:9px; height:9px; border-radius:50%; border:2px solid var(--accent); flex:none; margin-top:7px}
-.pend-body{flex:1}
-.pend-title{font-size:17.5px; display:block; line-height:1.4}
-.pend-meta{display:flex; flex-wrap:wrap; gap:7px; margin-top:8px; align-items:center}
-.due{font-family:var(--mono); font-size:11px; letter-spacing:.04em; padding:3px 9px; border-radius:3px; background:var(--paper-2); border:1px solid var(--line-2); color:var(--ink-soft)}
-.due.soon{background:#f7e6df; border-color:var(--accent); color:var(--accent-2); font-weight:600}
-.due.nodate{font-style:italic}
-.status-pill,.prio-pill{font-family:var(--mono); font-size:10px; letter-spacing:.08em; text-transform:uppercase; padding:3px 9px; border-radius:100px; border:1px solid var(--line-2); color:var(--ink-soft)}
-.prio-pill.hi{color:var(--accent); border-color:var(--accent)}
-.empty{font-style:italic; color:var(--ink-soft); font-size:16px}
-
-.docs .tech-note{font-style:italic; color:var(--ink-soft); margin-bottom:14px; font-size:16px}
-.doc-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(210px,1fr)); gap:12px}
-.doc-card{display:flex; flex-direction:column; gap:6px; padding:15px 16px; border:1px solid var(--line-2); background:var(--paper-2); text-decoration:none; color:var(--ink); border-radius:3px; transition:.22s; position:relative; overflow:hidden}
-.doc-card::after{content:""; position:absolute; left:0; top:0; bottom:0; width:3px; background:var(--accent); transform:scaleY(0); transform-origin:top; transition:.25s}
-.doc-card:hover{background:var(--paper); transform:translateY(-2px); box-shadow:0 8px 24px -12px rgba(33,27,21,.4)}
-.doc-card:hover::after{transform:scaleY(1)}
-.doc-kind{font-family:var(--mono); font-size:9.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--accent-2)}
-.doc-label{font-size:16px; line-height:1.3; font-weight:500}
-.doc-host{font-family:var(--mono); font-size:11px; color:var(--ink-soft); margin-top:auto; word-break:break-all}
-
-footer{border-top:3px double var(--ink); margin-top:30px; padding:46px 0 70px; text-align:center}
-footer .mark{font-family:var(--disp); font-style:italic; font-size:30px; color:var(--accent)}
-footer p{font-family:var(--mono); font-size:11.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--ink-soft); margin-top:14px}
-
-@media(max-width:760px){
-  .stats{grid-template-columns:repeat(2,1fr)}
-  .stat:nth-child(2){border-right:none}
-  .stat:nth-child(-n+2){border-bottom:1px solid var(--line-2)}
-  .index-grid{grid-template-columns:1fr}
-  .p-head{grid-template-columns:1fr; gap:12px}
-  .p-counts{justify-content:flex-start; text-align:left}
-  .cnt:first-child{padding-left:0}
-  .p-body{grid-template-columns:1fr; gap:30px}
+.hero-inner{max-width:1080px;margin:0 auto;padding:0 20px;display:flex;flex-wrap:wrap;gap:26px;align-items:flex-end;justify-content:space-between}
+.eyebrow{
+  font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--ink-soft);
 }
-@media print{
-  body{background:#fff; font-size:12pt}
-  body::before{display:none}
-  .project{opacity:1; transform:none; animation:none; break-inside:avoid; page-break-inside:avoid}
-  .doc-card,.callout{box-shadow:none}
-  a{color:var(--ink)}
+h1{
+  font-family:'Fraunces',serif;font-weight:900;font-size:clamp(38px,6vw,60px);
+  line-height:.95;letter-spacing:-.02em;margin:8px 0 10px;
 }
+h1 span{color:var(--moss)}
+.sub{color:var(--ink-soft);max-width:52ch;font-size:15px}
+.patient{
+  background:var(--card);border:1px solid var(--line);border-radius:14px;
+  padding:14px 18px;box-shadow:var(--shadow);font-family:'IBM Plex Mono',monospace;
+  font-size:12px;line-height:2;min-width:230px;
+}
+.patient b{color:var(--ink)}
+.patient span{color:var(--ink-soft)}
+
+/* ---------- DISCLAIMER ---------- */
+.note{
+  border:1px solid #ead9b8;background:var(--amber-soft);border-radius:12px;
+  padding:14px 16px;font-size:13.5px;color:#5f4614;margin-bottom:26px;
+}
+.note b{color:#42300c}
+
+/* ---------- TABS ---------- */
+nav.tabs{
+  display:flex;gap:4px;flex-wrap:wrap;border-bottom:1px solid var(--line);
+  margin-bottom:24px;position:sticky;top:0;background:var(--paper);z-index:20;padding-top:6px;
+}
+.tab{
+  border:0;background:none;cursor:pointer;font:inherit;font-weight:600;font-size:13.5px;
+  color:var(--ink-soft);padding:11px 14px;border-bottom:2px solid transparent;
+  transition:color .15s, border-color .15s;
+}
+.tab:hover{color:var(--ink)}
+.tab[aria-selected="true"]{color:var(--moss);border-bottom-color:var(--moss)}
+.tab:focus-visible{outline:2px solid var(--ocean);outline-offset:2px;border-radius:4px}
+.panel{display:none;animation:fade .25s ease}
+.panel.on{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+
+/* ---------- COMMON ---------- */
+h2{font-family:'Fraunces',serif;font-weight:600;font-size:26px;letter-spacing:-.01em;margin:34px 0 6px}
+h2:first-child{margin-top:6px}
+h3{font-size:15px;font-weight:700;margin:22px 0 8px}
+.lead{color:var(--ink-soft);margin-bottom:16px;max-width:70ch}
+.grid{display:grid;gap:14px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+.card{
+  background:var(--card);border:1px solid var(--line);border-radius:14px;
+  padding:16px 18px;box-shadow:var(--shadow);
+}
+.card h4{font-size:14.5px;font-weight:700;margin-bottom:6px;display:flex;gap:8px;align-items:center}
+.card p{font-size:13.5px;color:var(--ink-soft)}
+.card ul{margin:8px 0 0 18px;font-size:13.5px;color:var(--ink-soft)}
+.card li{margin-bottom:5px}
+.dot{width:8px;height:8px;border-radius:50%;flex:none}
+.tag{
+  display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:10.5px;
+  letter-spacing:.06em;text-transform:uppercase;padding:3px 8px;border-radius:999px;font-weight:600;
+}
+.t-green{background:var(--moss-soft);color:var(--moss)}
+.t-amber{background:var(--amber-soft);color:var(--amber)}
+.t-red{background:var(--brick-soft);color:var(--brick)}
+.t-blue{background:var(--ocean-soft);color:var(--ocean)}
+
+/* ---------- FILTERS ---------- */
+.filters{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:0 0 16px}
+.search{
+  flex:1;min-width:200px;border:1px solid var(--line);border-radius:10px;
+  padding:9px 12px;font:inherit;font-size:13.5px;background:var(--card);color:var(--ink);
+}
+.search:focus{outline:2px solid var(--ocean);outline-offset:1px}
+.chip{
+  border:1px solid var(--line);background:var(--card);border-radius:999px;
+  padding:7px 13px;font:inherit;font-size:12.5px;font-weight:600;color:var(--ink-soft);
+  cursor:pointer;transition:.15s;
+}
+.chip:hover{border-color:var(--ink-soft)}
+.chip[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:#fff}
+.chip:focus-visible{outline:2px solid var(--ocean);outline-offset:2px}
+.count{font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--ink-soft)}
+.empty{
+  border:1px dashed var(--line);border-radius:12px;padding:30px;text-align:center;
+  color:var(--ink-soft);font-size:13.5px;
+}
+
+/* ---------- FOOD ITEM ---------- */
+.food{
+  background:var(--card);border:1px solid var(--line);border-left-width:4px;border-radius:12px;
+  padding:13px 15px;box-shadow:var(--shadow);
+}
+.food.si{border-left-color:var(--moss)}
+.food.cautela{border-left-color:var(--amber)}
+.food.no{border-left-color:var(--brick)}
+.food-top{display:flex;justify-content:space-between;gap:10px;align-items:flex-start;margin-bottom:5px}
+.food-name{font-weight:700;font-size:14.5px}
+.food p{font-size:13px;color:var(--ink-soft)}
+.food .why{font-size:12px;color:var(--ink-soft);margin-top:6px;padding-top:6px;border-top:1px dashed var(--line)}
+.food .why b{color:var(--ink)}
+
+/* ---------- SCHEDULE ---------- */
+.sched{border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--card);box-shadow:var(--shadow)}
+.slot{display:grid;grid-template-columns:76px 1fr;gap:0;border-bottom:1px solid var(--line)}
+.slot:last-child{border-bottom:0}
+.slot-h{
+  font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:600;
+  padding:14px 10px;background:#f7f4ee;border-right:1px solid var(--line);
+  display:flex;align-items:flex-start;justify-content:center;color:var(--ink-soft);
+}
+.slot-b{padding:12px 14px;display:flex;flex-direction:column;gap:7px}
+.ev{display:flex;gap:9px;align-items:flex-start;font-size:13.5px}
+.ev .bar{width:3px;border-radius:2px;flex:none;align-self:stretch;min-height:20px}
+.ev-t{font-weight:600}
+.ev-d{color:var(--ink-soft);font-size:12.5px}
+.legend{display:flex;flex-wrap:wrap;gap:14px;margin:12px 0 16px;font-size:12.5px;color:var(--ink-soft)}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px}
+
+/* ---------- MED CARDS ---------- */
+.med{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px;box-shadow:var(--shadow)}
+.med-h{display:flex;justify-content:space-between;gap:10px;align-items:flex-start;margin-bottom:10px}
+.med-n{font-family:'Fraunces',serif;font-size:20px;font-weight:600}
+.med-t{font-size:12px;color:var(--ink-soft)}
+.med-specs{display:grid;grid-template-columns:repeat(auto-fit,minmax(90px,1fr));gap:8px;margin-bottom:10px}
+.spec{background:#f7f4ee;border-radius:8px;padding:7px 9px}
+.spec dt{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);font-family:'IBM Plex Mono',monospace}
+.spec dd{font-size:13.5px;font-weight:600;margin-top:1px}
+.med .rule{font-size:12.5px;background:var(--amber-soft);border-radius:8px;padding:8px 10px;color:#5f4614}
+
+/* ---------- CHECKLIST ---------- */
+.check{display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--line)}
+.check:last-child{border-bottom:0}
+.check input{margin-top:4px;width:16px;height:16px;accent-color:var(--moss);flex:none;cursor:pointer}
+.check label{cursor:pointer;font-size:13.5px}
+.check .cd{color:var(--ink-soft);font-size:12.5px;display:block}
+.check input:checked + label{opacity:.45;text-decoration:line-through}
+
+/* ---------- ALERT ---------- */
+.alert{border:1px solid #eec9c3;background:var(--brick-soft);border-radius:14px;padding:16px 18px}
+.alert h4{color:var(--brick);font-size:14.5px;font-weight:700;margin-bottom:8px}
+.alert ul{margin-left:18px;font-size:13.5px;color:#6d2a21}
+.alert li{margin-bottom:5px}
+
+/* ---------- STEPS ---------- */
+.step{display:grid;grid-template-columns:30px 1fr;gap:12px;margin-bottom:14px;align-items:start}
+.step-n{
+  font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;color:var(--moss);
+  background:var(--moss-soft);border-radius:7px;height:26px;display:flex;align-items:center;justify-content:center;
+}
+.step p{font-size:13.5px;color:var(--ink-soft)}
+.step b{color:var(--ink)}
+
+footer{margin-top:44px;padding-top:18px;border-top:1px solid var(--line);font-size:12px;color:var(--ink-soft)}
+@media print{nav.tabs{display:none}.panel{display:block!important}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
 <body>
+
+<header class="hero">
+  <div class="hero-inner">
+    <div>
+      <div class="eyebrow">Fase 1 · Estabilización digestiva · 7 días</div>
+      <h1>Tommy<span>.</span></h1>
+      <p class="sub">Guía de dieta, manejo de medicamentos y cuidados diarios, armada a partir de los resultados de laboratorio del 2 de julio de 2026 y la fórmula de esta fase.</p>
+    </div>
+    <div class="patient">
+      <span>Especie</span> · <b>Canino, Poodle, macho</b><br>
+      <span>Edad</span> · <b>16 años</b><br>
+      <span>Orden</span> · <b>067016 – 184</b><br>
+      <span>Lab</span> · <b>VETS, Bogotá D.C.</b><br>
+      <span>Toma</span> · <b>2026-07-02</b>
+    </div>
+  </div>
+</header>
+
 <div class="wrap">
 
-  <header class="masthead">
-    <div class="top-rule">
-      <span class="org">El Colombiano · Desarrollador Multimedia</span>
-      <span>Confidencial — uso interno</span>
-      <span>Vigencia: 23 jun 2026</span>
-    </div>
-    <div class="kicker">Documento de entrega · Vacaciones</div>
-    <h1 class="title">Estado de<br><em>proyectos</em></h1>
-    <p class="subtitle">Todo lo que está en curso, lo que ya quedó hecho y lo que queda pendiente</p>
-    <div class="byline">
-      <span>Responsable<b>Esteban Castro</b></span>
-      <span>Rol<b>Desarrollador</b></span>
-      <span>Proyectos entregados<b>8 activos</b></span>
-      <span>Fecha de corte<b>junio 23, 2026</b></span>
-    </div>
-  </header>
+<div class="note">
+  <b>Antes de arrancar:</b> esta guía no diagnostica ni reemplaza al veterinario. Organiza lo que ya está formulado y agrega manejo alimenticio general. Tommy tiene 16 años y valores renales alterados (BUN 39, creatinina 1.8, proteinuria ++), así que <b>cualquier cambio de dieta, premio o suplemento debe pasar por el veterinario antes</b>. Las porciones aquí son puntos de partida; el peso exacto de Tommy manda.
+</div>
 
-  <div class="callout">
-    <h3>Si alguien necesita algo de mí</h3>
-    <p>Antes de escribirme, revisa este documento: aquí está el contexto, el estado y los enlaces de cada proyecto. La mayoría de pendientes ya tienen responsable, fecha o están a la espera de un tercero. Si después de leerlo sigues necesitando algo urgente, deja la solicitud anotada sobre el proyecto correspondiente.</p>
+<nav class="tabs" role="tablist">
+  <button class="tab" role="tab" aria-selected="true" data-p="dieta">Dieta</button>
+  <button class="tab" role="tab" aria-selected="false" data-p="alimentos">Sí / Cautela / No</button>
+  <button class="tab" role="tab" aria-selected="false" data-p="horario">Horario</button>
+  <button class="tab" role="tab" aria-selected="false" data-p="medicamentos">Medicamentos</button>
+  <button class="tab" role="tab" aria-selected="false" data-p="apetito">Abrir apetito</button>
+  <button class="tab" role="tab" aria-selected="false" data-p="cuidados">Cuidados y alertas</button>
+  <button class="tab" role="tab" aria-selected="false" data-p="checklist">Checklist diario</button>
+</nav>
+
+<!-- ============ DIETA ============ -->
+<section class="panel on" id="dieta">
+  <h2>La lógica de la dieta</h2>
+  <p class="lead">Tres cosas del laboratorio mandan sobre el plato: hay <b>mala digestión de carbohidratos</b> (azúcares reductores positivos, almidones ++, restos vegetales +++), hay <b>disbiosis</b> (bacilos Gram positivos 80%, levaduras +++) y hay <b>riñón senil comprometido</b>. Eso apunta a una dieta blanda, baja en carbohidratos fermentables, muy digerible, y con proteína de buena calidad pero sin exceso.</p>
+
+  <div class="grid g3">
+    <div class="card">
+      <h4><span class="dot" style="background:var(--moss)"></span> Muy digerible</h4>
+      <p>Proteína magra cocida sin grasa y almidón bien cocido y en poca cantidad. Nada crudo, nada con fibra dura mientras haya heces blandas.</p>
+    </div>
+    <div class="card">
+      <h4><span class="dot" style="background:var(--amber)"></span> Poco carbohidrato</h4>
+      <p>Los almidones y azúcares que no se digieren alimentan levaduras. Menos arroz del que uno instintivamente daría, y cero azúcar añadido.</p>
+    </div>
+    <div class="card">
+      <h4><span class="dot" style="background:var(--ocean)"></span> Muchas comidas chicas</h4>
+      <p>4 a 6 tomas pequeñas al día en vez de 2 grandes. Menos carga digestiva por vez, mejor tolerancia y menos náusea.</p>
+    </div>
   </div>
 
-  <div class="stats">
-    <div class="stat"><b>8</b><span>Proyectos activos</span></div>
-    <div class="stat"><b class="accent">11</b><span>Pendientes cumplidos</span></div>
-    <div class="stat"><b>9</b><span>Pendientes por hacer</span></div>
-    <div class="stat"><b>5</b><span>De prioridad alta</span></div>
+  <h2>Plato base de la fase blanda</h2>
+  <p class="lead">Proporción de arranque: <b>2 partes de proteína por 1 de almidón</b> (al revés de la receta clásica "pollo con arroz", justamente por los azúcares reductores positivos). Todo cocido en agua, sin sal, sin aceite, sin ajo, sin cebolla, sin condimento de ningún tipo. Servido tibio, nunca frío de nevera.</p>
+
+  <div class="grid g2">
+    <div class="card">
+      <h4>Proteína (elegir una)</h4>
+      <ul>
+        <li><b>Pechuga de pollo</b> sin piel y sin hueso, hervida y desmechada. La opción más segura.</li>
+        <li><b>Pavo</b> magro hervido, si el pollo cansa.</li>
+        <li><b>Pescado blanco</b> (tilapia, basa) hervido, sin espinas. Buen recurso si rechaza el pollo.</li>
+        <li><b>Clara de huevo</b> cocida, en poca cantidad, como refuerzo puntual.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4>Almidón (poco, elegir uno)</h4>
+      <ul>
+        <li><b>Arroz blanco</b> muy bien cocido, pasado de cocción. Nunca integral.</li>
+        <li><b>Papa</b> pelada y hervida, en puré. Sin cáscara.</li>
+        <li><b>Calabaza / ahuyama</b> hervida en puré: aporta fibra soluble que ayuda a formar la heces.</li>
+      </ul>
+      <p class="why" style="margin-top:8px;padding-top:8px;border-top:1px dashed var(--line)"><b>Ojo:</b> si sigue con heces blandas y restos vegetales, baja el almidón antes que la proteína.</p>
+    </div>
   </div>
 
-  <nav class="index">
-    <div class="index-h">Índice de proyectos</div>
-    <div class="index-grid"><a href="#p1"><span>01</span>Contextualizador - Piloto</a><a href="#p2"><span>02</span>Intelecto</a><a href="#p3"><span>03</span>Marketing Empresarial</a><a href="#p4"><span>04</span>Gobernanza IA </a><a href="#p5"><span>05</span>WordPress Multisite Conversaciones</a><a href="#p6"><span>06</span>Dashboard de métricas de lectura</a><a href="#p7"><span>07</span>Marcas aliadas V2</a><a href="#p8"><span>08</span>Proyecto Bancolombia Inmobiliaria</a></div>
-  </nav>
+  <h2>Cómo prepararlo</h2>
+  <div class="card">
+    <div class="step"><div class="step-n">1</div><div><p><b>Hervir en agua, punto.</b> El pollo en agua sin sal hasta que se deshaga. Botar el agua grasa o dejarla enfriar y retirar la capa de grasa de arriba.</p></div></div>
+    <div class="step"><div class="step-n">2</div><div><p><b>Desmechar fino.</b> A los 16 años la masticación y la deglución no son las de antes. Hebras pequeñas o incluso triturado.</p></div></div>
+    <div class="step"><div class="step-n">3</div><div><p><b>Cocinar el arroz de más.</b> Con más agua de lo normal y más tiempo: entre más gelatinizado el almidón, menos llega sin digerir al colon a alimentar levaduras.</p></div></div>
+    <div class="step"><div class="step-n">4</div><div><p><b>Servir tibio.</b> El calor libera olor y el olor es el 80% del apetito de un perro. Un plato frío es un plato rechazado.</p></div></div>
+    <div class="step"><div class="step-n">5</div><div><p><b>Porciones pequeñas y frecuentes.</b> Dividir el total del día en 4–6 tomas. Si vomita, esperar y volver con la mitad.</p></div></div>
+    <div class="step"><div class="step-n">6</div><div><p><b>Preparar máximo para 2 días.</b> Refrigerado y tapado, calentado toma por toma. Comida vieja en un intestino ya alterado es problema seguro.</p></div></div>
+  </div>
 
-  <main>
+  <h2>La transición de vuelta</h2>
+  <p class="lead">Cuando la deposición vuelva a estar formada y el veterinario dé el visto bueno, no se cambia de golpe. Cinco a siete días mínimo:</p>
+  <div class="grid g3">
+    <div class="card"><h4>Días 1–2</h4><p>75% dieta blanda · 25% alimento definitivo</p></div>
+    <div class="card"><h4>Días 3–4</h4><p>50% / 50%</p></div>
+    <div class="card"><h4>Días 5–7</h4><p>25% / 75%, luego 100%</p></div>
+  </div>
+  <p class="lead" style="margin-top:12px">Si en algún escalón vuelve la heces blanda, se retrocede un paso y se sostiene dos días más. Y conviene preguntarle al veterinario si por el tema renal el alimento definitivo debería ser una <b>dieta renal comercial</b> (proteína controlada y fósforo bajo) en vez del alimento de siempre — esa decisión es de él, no nuestra.</p>
+</section>
 
-    <section class="project" id="p1" style="--d:0s">
-      <div class="p-head">
-        <div class="p-num">01</div>
-        <div class="p-titlewrap">
-          <h2 class="p-name">Contextualizador - Piloto</h2>
-          <div class="p-badges">
-            <span class="badge front">Líder IA</span>
-            <span class="badge role">Líder</span>
-            <span class="badge status">Idea</span>
-            <span class="badge health ok">En orden</span>
-            <span class="badge prio hi">Prioridad Alta</span>
-          </div>
-        </div>
-        <div class="p-counts">
-          <div class="cnt"><b>0</b><span>hechos</span></div>
-          <div class="cnt sep"><b>1</b><span>pendientes</span></div>
-        </div>
-      </div>
-      <div class="p-body">
-        <div class="p-context">
-        <div class="field">
-          <span class="field-k">Objetivo</span>
-          <p class="field-v">Lograr un piloto de contextualizador de elcolombiano</p>
-        </div>
-        <div class="field">
-          <span class="field-k">Próximo paso</span>
-          <p class="field-v">Redescubrir el proyecto y mirar como hacer el scrapper.</p>
-        </div></div>
-        <div class="p-work">
-          
-          
-      <div class="block">
-        <h3 class="block-h"><span class="block-ic pend-ic">!</span> Pendiente por hacer <span class="block-n">1</span></h3>
-        <ul class="list pend-list">
-          <li>
-              <span class="dot"></span>
-              <div class="pend-body">
-                <span class="pend-title">Mirar como funciona el scrapper y una prueba de contexto</span>
-                <span class="pend-meta"><span class="due ">3 jul 2026 · en 10d</span><span class="status-pill">Próximo</span><span class="prio-pill mid">Media</span></span>
-              </div>
-            </li>
-        </ul>
-      </div>
-          
-        </div>
-      </div>
-    </section>
+<!-- ============ ALIMENTOS ============ -->
+<section class="panel" id="alimentos">
+  <h2>Qué sí, qué con cautela, qué nunca</h2>
+  <p class="lead">Filtra por categoría o busca un alimento puntual. La columna del "por qué" está pensada específicamente para el caso de Tommy: intestino alterado, levaduras altas y riñón senil.</p>
 
-    <section class="project" id="p2" style="--d:0.06s">
-      <div class="p-head">
-        <div class="p-num">02</div>
-        <div class="p-titlewrap">
-          <h2 class="p-name">Intelecto</h2>
-          <div class="p-badges">
-            <span class="badge front">Desarrollo</span>
-            <span class="badge role">Desarrollador</span>
-            <span class="badge status">Idea</span>
-            <span class="badge health warn">Requiere atención</span>
-            <span class="badge prio hi">Prioridad Alta</span>
-          </div>
-        </div>
-        <div class="p-counts">
-          <div class="cnt"><b>4</b><span>hechos</span></div>
-          <div class="cnt sep"><b>2</b><span>pendientes</span></div>
-        </div>
-      </div>
-      <div class="p-body">
-        <div class="p-context">
-        <div class="field">
-          <span class="field-k">Objetivo</span>
-          <p class="field-v">Rediseño del sitio web intelecto.</p>
-        </div>
-        <div class="field">
-          <span class="field-k">Problema de negocio</span>
-          <p class="field-v">Imagen nueva de intelecto, desarrollo nuevo</p>
-        </div>
-        <div class="field">
-          <span class="field-k">Impacto</span>
-          <p class="field-v">Mejor rendimiento en entorno web, mayor atracción de clientes</p>
-        </div>
-        <div class="field">
-          <span class="field-k">Contexto actual</span>
-          <p class="field-v">El proyecto ya está listo con todo configurado. Servidor y urls públicas. </p>
-        </div>
-        <div class="field">
-          <span class="field-k">Contexto de la app</span>
-          <p class="field-v">Desde el dominio https://intelectoapi.grupoelcolombiano.com/, se consume el API para mostrarlo en https://intelecto.grupoelcolombiano.com/
+  <div class="filters">
+    <input class="search" id="q" type="search" placeholder="Buscar alimento… (pollo, uva, queso)" aria-label="Buscar alimento">
+    <button class="chip" data-f="todos" aria-pressed="true">Todos</button>
+    <button class="chip" data-f="si" aria-pressed="false">Sí</button>
+    <button class="chip" data-f="cautela" aria-pressed="false">Con cautela</button>
+    <button class="chip" data-f="no" aria-pressed="false">Nunca</button>
+  </div>
+  <p class="count" id="count"></p>
 
-Es un desarrollo que está hecho en astro con ssr
-</p>
-        </div>
-        <div class="field">
-          <span class="field-k">Próximo paso</span>
-          <p class="field-v">Pasarle accesos a la gente de editorial y luego corregir lo que nos pasaron</p>
-        </div>
-        <div class="field">
-          <span class="field-k">Próximo hito</span>
-          <p class="field-v">Migrar contenido, Hacer ultimas correcciones</p>
-        </div></div>
-        <div class="p-work">
-          
-      <div class="block">
-        <h3 class="block-h"><span class="block-ic done-ic">&#10003;</span> Lo que ya está hecho <span class="block-n">4</span></h3>
-        <ul class="list done-list">
-          <li><span class="tick">&#10003;</span><span>Desarrollo Api lista</span></li><li><span class="tick">&#10003;</span><span>Desarrollo front listo</span></li>
-          <li><span class="tick">&#10003;</span><span><strong>Pasarle accesos de las dos URLS a los editores - Intelecto</strong></span></li><li><span class="tick">&#10003;</span><span><strong>Manual tecnico, medidas imagenes, hacer páginas faltantes</strong><em class="resol">Se hizo un HTML con la documentación de tamaño de las imagenes. 
+  <div class="grid g2" id="foods" style="margin-top:12px"></div>
+  <div class="empty" id="none" style="display:none">Nada coincide con esa búsqueda. Probá con otra palabra.</div>
+</section>
 
-Quedó en esta ruta: 
-https://intelectoapi.grupoelcolombiano.com/tamano-de-imagenes/</em></span></li>
-        </ul>
-      </div>
-          
-      <div class="block">
-        <h3 class="block-h"><span class="block-ic pend-ic">!</span> Pendiente por hacer <span class="block-n">2</span></h3>
-        <ul class="list pend-list">
-          <li>
-              <span class="dot"></span>
-              <div class="pend-body">
-                <span class="pend-title">Corregir sliders de intelecto</span>
-                <span class="pend-meta"><span class="due soon">26 jun 2026 · en 3d</span><span class="status-pill">Próximo</span><span class="prio-pill mid">Media</span></span>
-              </div>
-            </li><li>
-              <span class="dot"></span>
-              <div class="pend-body">
-                <span class="pend-title">Hay que pasarle los espacios de pauta a Manotas</span>
-                <span class="pend-meta"><span class="due soon">30 jun 2026 · en 7d</span><span class="status-pill">Próximo</span><span class="prio-pill mid">Media</span></span>
-              </div>
-            </li>
-        </ul>
-      </div>
-          
-      <div class="block docs">
-        <h3 class="block-h"><span class="block-ic doc-ic">&para;</span> Documentación y enlaces</h3>
-        
-        <div class="doc-grid">
-          <a class="doc-card" href="https://intelectoapi.grupoelcolombiano.com/tamano-de-imagenes/" target="_blank" rel="noopener">
-            <span class="doc-kind">Blog o internet</span>
-            <span class="doc-label">Tamaño de imagenes</span>
-            <span class="doc-host">intelectoapi.grupoelcolombiano.com &#8599;</span>
-          </a><a class="doc-card" href="https://teams.cloud.microsoft/l/meetingrecap?driveId=b%21s2zsYNRhhUuATbvjjyuIo7Dn0d-_xsVFnz2ExvFZ3JtbFrT-Yrb6R6tacsaex1r0&amp;driveItemId=01XSAZE7FZXG5J5DZFMRE23KUWMML55TID&amp;sitePath=https%3A%2F%2Fepublicidad-my.sharepoint.com%2F%3Av%3A%2Fg%2Fpersonal%2Fsantiagolo_elcolombiano_com_co%2FIQC5ubqejyVkSa2qlmMX3s0DAWAx164XuS-9zwG7pv19ado&amp;fileUrl=https%3A%2F%2Fepublicidad-my.sharepoint.com%2Fpersonal%2Fsantiagolo_elcolombiano_com_co%2FDocuments%2FGrabaciones%2FCapacitaci%C3%B3n+nuevo+sitio+Intelecto-20260603_150519-Grabaci%C3%B3n+de+la+reuni%C3%B3n.mp4%3Fweb%3D1&amp;iCalUid=040000008200E00074C5B7101A82E0080000000090C1CC9526EDDC01000000000000000010000000F8DF1DFB5D069F4292840790125B9A00&amp;threadId=19%3Ameeting_NDAzODBhYTEtOGIwOS00ZGM3LWI0YWQtYmVkNGMwMjEyNTEz%40thread.v2&amp;organizerId=b1dd39aa-88a2-45a0-a71e-c4433d65c798&amp;tenantId=1fbebb3e-db58-4393-90bd-9269ebe0acf4&amp;callId=ea2240e5-747e-447f-b48b-9734c0224aac&amp;threadType=Meeting&amp;meetingType=Scheduled&amp;subType=RecapSharingLink_RecapCore" target="_blank" rel="noopener">
-            <span class="doc-kind">Video</span>
-            <span class="doc-label">Capacitación numero 1</span>
-            <span class="doc-host">teams.cloud.microsoft &#8599;</span>
-          </a><a class="doc-card" href="https://teams.cloud.microsoft/l/meetingrecap?driveId=b%21s2zsYNRhhUuATbvjjyuIo7Dn0d-_xsVFnz2ExvFZ3JtbFrT-Yrb6R6tacsaex1r0&amp;driveItemId=01XSAZE7BVINPZZTQO2BCLWSFITG5SWHWA&amp;sitePath=https%3A%2F%2Fepublicidad-my.sharepoint.com%2Fpersonal%2Fsantiagolo_elcolombiano_com_co%2FDocuments%2FGrabaciones%2FCapacitaci%C3%B3n+nuevo+sitio+Intelecto-20260610_103307-Grabaci%C3%B3n+de+la+reuni%C3%B3n+1.mp4&amp;fileUrl=https%3A%2F%2Fepublicidad-my.sharepoint.com%2Fpersonal%2Fsantiagolo_elcolombiano_com_co%2FDocuments%2FGrabaciones%2FCapacitaci%C3%B3n+nuevo+sitio+Intelecto-20260610_103307-Grabaci%C3%B3n+de+la+reuni%C3%B3n+1.mp4%3Fweb%3D1&amp;iCalUid=040000008200E00074C5B7101A82E0080000000090C1CC9526EDDC01000000000000000010000000F8DF1DFB5D069F4292840790125B9A00&amp;threadId=19%3Ameeting_NDAzODBhYTEtOGIwOS00ZGM3LWI0YWQtYmVkNGMwMjEyNTEz%40thread.v2&amp;organizerId=b1dd39aa-88a2-45a0-a71e-c4433d65c798&amp;tenantId=1fbebb3e-db58-4393-90bd-9269ebe0acf4&amp;callId=9c426f4c-710c-4235-94eb-6d60607b8450&amp;threadType=Meeting&amp;meetingType=Scheduled&amp;subType=RecapSharingLink_RecapCore" target="_blank" rel="noopener">
-            <span class="doc-kind">Video</span>
-            <span class="doc-label">Capacitación numero 2</span>
-            <span class="doc-host">teams.cloud.microsoft &#8599;</span>
-          </a><a class="doc-card" href="https://intelectoapi.grupoelcolombiano.com/tamano-de-imagenes/" target="_blank" rel="noopener">
-            <span class="doc-kind">Doc</span>
-            <span class="doc-label">Documentación técnica</span>
-            <span class="doc-host">intelectoapi.grupoelcolombiano.com &#8599;</span>
-          </a>
-        </div>
-      </div>
-        </div>
-      </div>
-    </section>
+<!-- ============ HORARIO ============ -->
+<section class="panel" id="horario">
+  <h2>Un día tipo</h2>
+  <p class="lead">Armado sobre la regla dura de la fórmula: <b>Metronid y Br Vet Gut Star separados mínimo 5 horas</b>. Aquí el Metronid va a las 8:00 a.m. y el probiótico a las 2:00 p.m. y 2:00 a.m.… lo cual no es realista de noche. Por eso abajo hay una versión más humana. Ajustá las horas a tu rutina siempre que respetes la separación de 5 horas.</p>
 
-    <section class="project" id="p3" style="--d:0.12s">
-      <div class="p-head">
-        <div class="p-num">03</div>
-        <div class="p-titlewrap">
-          <h2 class="p-name">Marketing Empresarial</h2>
-          <div class="p-badges">
-            <span class="badge front">Líder IA</span>
-            <span class="badge role">Líder</span>
-            <span class="badge status">Planeación</span>
-            <span class="badge health ok">En orden</span>
-            <span class="badge prio hi">Prioridad Alta</span>
-          </div>
-        </div>
-        <div class="p-counts">
-          <div class="cnt"><b>3</b><span>hechos</span></div>
-          <div class="cnt sep"><b>1</b><span>pendientes</span></div>
-        </div>
-      </div>
-      <div class="p-body">
-        <div class="p-context">
-        <div class="field">
-          <span class="field-k">Objetivo</span>
-          <p class="field-v">El objetivo de este proyecto es lograr tener una aplicación sólida para el manejo de nuestro sistema de whatsapp. 
+  <div class="legend">
+    <span><i style="background:var(--brick)"></i>Metronid</span>
+    <span><i style="background:var(--moss)"></i>Probiótico</span>
+    <span><i style="background:var(--ocean)"></i>Zoo Diar</span>
+    <span><i style="background:var(--amber)"></i>Electro Zoo</span>
+    <span><i style="background:#8a7fb0"></i>Comida</span>
+  </div>
 
-Sistema de campañas outbound y demás.</p>
-        </div>
-        <div class="field">
-          <span class="field-k">Contexto actual</span>
-          <p class="field-v">Se pasó un spike para elegir un BSP. Ya está parobado el MVP.
+  <div class="sched" id="sched"></div>
 
-Estamos escogiendo el bsp adecuado y el proximo paso es reunirnos con los proveedores para mirar cuál es la mejor opción viendo el software. 
+  <h2>Por qué este orden</h2>
+  <div class="grid g2">
+    <div class="card">
+      <h4>La separación de 5 horas es lo único innegociable</h4>
+      <p>El Metronid es antibiótico: si le cae encima al probiótico, mata las bacterias que estamos intentando sembrar y el Gut Star se vuelve un gasto inútil. Todo lo demás del horario se puede correr; esto no.</p>
+    </div>
+    <div class="card">
+      <h4>El probiótico va con comida</h4>
+      <p>Así lo indica la fórmula, y además ayuda: mezclado en el plato entra sin pelea. Medio sobre, dos veces al día, cinco días.</p>
+    </div>
+    <div class="card">
+      <h4>Electro Zoo cada 4 horas es una meta, no una orden</h4>
+      <p>La fórmula lo dice explícitamente: se administra los días que se pueda. Si Tommy se estresa, es mejor 3 tomas tranquilas que 6 peleadas. El estrés también le pasa factura al riñón.</p>
+    </div>
+    <div class="card">
+      <h4>Zoo Diar: preparar el litro una vez al día</h4>
+      <p>Sobre completo disuelto en 1 litro de agua; de ahí salen los 10 ml de cada toma. Preparalo fresco cada mañana, marcá el frasco con la fecha y descartá el sobrante del día anterior.</p>
+    </div>
+  </div>
+</section>
 
-Pendiente pool de preguntas también
+<!-- ============ MEDICAMENTOS ============ -->
+<section class="panel" id="medicamentos">
+  <h2>Los cuatro medicamentos</h2>
+  <p class="lead">Tal como están en la fórmula. Nada de esto se ajusta sin el veterinario.</p>
+  <div class="grid g2" id="meds"></div>
 
+  <h2>Cómo dárselos sin pelear</h2>
+  <p class="lead">Con un perro de 16 años, la pelea diaria cuesta más que el medicamento. La meta es que asocie la jeringa con algo bueno, no con una emboscada.</p>
 
-Carpeta que contiene los archivos: 
+  <div class="grid g2">
+    <div class="card">
+      <h4>Líquidos por jeringa — la técnica</h4>
+      <ul>
+        <li><b>Por el costado, no de frente.</b> La jeringa entra por la comisura, entre los dientes y el cachete, apuntando hacia atrás y ligeramente hacia el lado opuesto.</li>
+        <li><b>Nunca apuntando a la garganta.</b> Un chorro directo a la faringe se va a los pulmones. En un perro senil eso es neumonía por aspiración: grave.</li>
+        <li><b>De a poquitos.</b> 1–2 ml por vez, esperar a que trague, seguir. Los 20 ml del Electro Zoo son 10 empujoncitos, no uno solo.</li>
+        <li><b>Cabeza nivelada</b>, no estirada hacia arriba. La postura de "trago forzado" es justo la que provoca aspiración.</li>
+        <li><b>Si tose, parar.</b> Bajarle la cabeza, dejarlo toser, esperar unos minutos y retomar más lento.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4>Rituales que bajan la resistencia</h4>
+      <ul>
+        <li><b>Siempre el mismo lugar y la misma persona.</b> La predictibilidad tranquiliza.</li>
+        <li><b>Premio inmediato después</b> (un pedacito de pollo hervido). Que el último recuerdo sea bueno.</li>
+        <li><b>Jeringa "en blanco" entre tomas:</b> a veces acercarle la jeringa vacía y darle un pedacito sin darle nada. Rompe la asociación jeringa = trago feo.</li>
+        <li><b>Envolverlo en una toalla</b> si forcejea, pero sin apretar. Le da contención, no castigo.</li>
+        <li><b>Voz baja y aburrida.</b> Nada de tono de emergencia; él lo lee al instante.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4>Enmascarar el sabor — qué sirve acá</h4>
+      <ul>
+        <li><b>Caldo de pollo casero sin sal</b>: un chorrito en la jeringa después del medicamento limpia el sabor.</li>
+        <li><b>Bolita de pollo hervido</b> con el probiótico adentro. El Gut Star va con comida de todas formas.</li>
+        <li><b>Puré de ahuyama</b>: pegajoso, tapa sabores y no le suma azúcar rápida.</li>
+        <li class="why" style="border:0;padding:0;margin:6px 0 0"><b>No usar</b> queso, salchichón, jamón ni paté comercial para esconder pastillas: sal y fósforo altos, justo lo peor para el riñón. Y nada de leche.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4>Si escupe o vomita la dosis</h4>
+      <ul>
+        <li><b>No repetir a ciegas.</b> Si vomitó a los pocos minutos y se ve el medicamento, avisale al veterinario antes de redosificar.</li>
+        <li><b>Anotarlo.</b> Hora, medicamento, qué pasó. Ese registro le sirve al veterinario más de lo que uno cree.</li>
+        <li><b>Dos dosis seguidas rechazadas</b> = llamada al veterinario, no ensayo y error en casa.</li>
+      </ul>
+    </div>
+  </div>
+</section>
 
-https://epublicidad-my.sharepoint.com/:f:/g/personal/estebancr_elcolombiano_com_co/IgBfvSMkwm8eSJ43Ccq7PelrAXBGKsHBRwducA8h1kfhffQ?e=lrdUCY</p>
-        </div>
-        <div class="field">
-          <span class="field-k">Próximo paso</span>
-          <p class="field-v">Escoger el BSP adecuado.</p>
-        </div>
-        <div class="field">
-          <span class="field-k">Próximo hito</span>
-          <p class="field-v">Escoger el BSP adecuado</p>
-        </div></div>
-        <div class="p-work">
-          
-      <div class="block">
-        <h3 class="block-h"><span class="block-ic done-ic">&#10003;</span> Lo que ya está hecho <span class="block-n">3</span></h3>
-        <ul class="list done-list">
-          <li><span class="tick">&#10003;</span><span>Iinicialización de fase 0. Investigación.</span></li>
-          <li><span class="tick">&#10003;</span><span><strong>Presentar el MVP</strong><em class="resol">Se presentó el MVP.
+<!-- ============ APETITO ============ -->
+<section class="panel" id="apetito">
+  <h2>Trucos para que vuelva a comer</h2>
+  <p class="lead">El apetito de un perro es olfato antes que gusto, y a los 16 años el olfato ya viene bajito. Casi todo lo que sirve acá es subirle el olor a la comida y bajarle el estrés al momento de comer.</p>
 
-Se aprobó el MVP y se inicia fase 0: Descubrir el BSP que tenga todo lo necesario, o al menos lo importante.</em></span></li><li><span class="tick">&#10003;</span><span><strong>Investigación de BSP - Rúbrica de decisión</strong></span></li>
-        </ul>
-      </div>
-          
-      <div class="block">
-        <h3 class="block-h"><span class="block-ic pend-ic">!</span> Pendiente por hacer <span class="block-n">1</span></h3>
-        <ul class="list pend-list">
-          <li>
-              <span class="dot"></span>
-              <div class="pend-body">
-                <span class="pend-title">Buscar los proveedores para conocer el software</span>
-                <span class="pend-meta"><span class="due soon">26 jun 2026 · en 3d</span><span class="status-pill">Próximo</span><span class="prio-pill mid">Media</span></span>
-              </div>
-            </li>
-        </ul>
-      </div>
-          
-      <div class="block docs">
-        <h3 class="block-h"><span class="block-ic doc-ic">&para;</span> Documentación y enlaces</h3>
-        
-        <div class="doc-grid">
-          <a class="doc-card" href="https://www.youtube.com/watch?v=Tj6oee3XyZk" target="_blank" rel="noopener">
-            <span class="doc-kind">Video</span>
-            <span class="doc-label">Construir propio log con claude code</span>
-            <span class="doc-host">youtube.com &#8599;</span>
-          </a><a class="doc-card" href="https://epublicidad-my.sharepoint.com/:p:/g/personal/estebancr_elcolombiano_com_co/IQC8jz9DkioERJgu9nwRNr8YATEP5Zja4Z9wyKNb5Yly_4Q?e=N1gR7J" target="_blank" rel="noopener">
-            <span class="doc-kind">Power point</span>
-            <span class="doc-label">Presentación del MVP</span>
-            <span class="doc-host">epublicidad-my.sharepoint.com &#8599;</span>
-          </a><a class="doc-card" href="https://epublicidad-my.sharepoint.com/:f:/g/personal/estebancr_elcolombiano_com_co/IgBfvSMkwm8eSJ43Ccq7PelrAXBGKsHBRwducA8h1kfhffQ?e=lrdUCY" target="_blank" rel="noopener">
-            <span class="doc-kind">Archivos</span>
-            <span class="doc-label">Carpeta de archivos</span>
-            <span class="doc-host">epublicidad-my.sharepoint.com &#8599;</span>
-          </a>
-        </div>
-      </div>
-        </div>
-      </div>
-    </section>
+  <div class="grid g2">
+    <div class="card">
+      <h4>Calor, siempre calor</h4>
+      <p>Tibiar la comida a temperatura corporal (nunca caliente) multiplica el aroma. Es el truco más efectivo y el más subestimado. Probá 10 segundos de microondas y revolvé bien para que no queden puntos calientes.</p>
+    </div>
+    <div class="card">
+      <h4>Caldo de pollo casero, sin sal ni cebolla</h4>
+      <p>Un chorrito sobre la comida. Suma olor, suma hidratación y baja la densidad para tragar más fácil. La cebolla y el ajo son tóxicos, así que caldo de cubito comercial queda descartado.</p>
+    </div>
+    <div class="card">
+      <h4>Dárselo a mano</h4>
+      <p>Un perro enfermo muchas veces come de la mano lo que no come del plato. Es contacto, no capricho. Los primeros bocados a mano suelen arrancar el resto.</p>
+    </div>
+    <div class="card">
+      <h4>Plato bajo y antideslizante</h4>
+      <p>A los 16 años, agacharse duele y resbalarse asusta. Un plato elevado a la altura del pecho, sobre superficie con agarre, cambia mucho la disposición a comer.</p>
+    </div>
+    <div class="card">
+      <h4>Ventana de 15 minutos</h4>
+      <p>Ofrecer, dejar 15 minutos, retirar. Comida disponible todo el día pierde el olor y él pierde el hambre. La rutina crea el hambre.</p>
+    </div>
+    <div class="card">
+      <h4>Silencio y soledad</h4>
+      <p>Sin otras mascotas alrededor, sin ruido, sin gente pasando. Un perro que se siente vulnerable no come.</p>
+    </div>
+    <div class="card">
+      <h4>Textura de paté</h4>
+      <p>Triturar todo con un poco de caldo hasta textura cremosa. Menos trabajo de masticación = más probabilidad de que lo termine.</p>
+    </div>
+    <div class="card">
+      <h4>Rotar, pero de a una cosa</h4>
+      <p>Si se cansó del pollo, pasar a pavo o pescado blanco. Un cambio a la vez, para saber qué funcionó y qué le cayó mal.</p>
+    </div>
+  </div>
 
-    <section class="project" id="p4" style="--d:0.18s">
-      <div class="p-head">
-        <div class="p-num">04</div>
-        <div class="p-titlewrap">
-          <h2 class="p-name">Gobernanza IA </h2>
-          <div class="p-badges">
-            <span class="badge front">Líder IA</span>
-            <span class="badge role">Líder</span>
-            <span class="badge status">Planeación</span>
-            <span class="badge health ok">En orden</span>
-            <span class="badge prio hi">Prioridad Alta</span>
-          </div>
-        </div>
-        <div class="p-counts">
-          <div class="cnt"><b>2</b><span>hechos</span></div>
-          <div class="cnt sep"><b>1</b><span>pendientes</span></div>
-        </div>
-      </div>
-      <div class="p-body">
-        <div class="p-context">
-        <div class="field">
-          <span class="field-k">Objetivo</span>
-          <p class="field-v">Este proyecto busca establecer una gobernanza de la Inteligencia Artificial dentro de la empresa</p>
-        </div>
-        <div class="field">
-          <span class="field-k">Problema de negocio</span>
-          <p class="field-v">Que la gente use la IA como le de la gana e implementaciones sanas de la Inteligencia Artificial en la empresa</p>
-        </div>
-        <div class="field">
-          <span class="field-k">Impacto</span>
-          <p class="field-v">Menos shadow IA. Mejor uso de la inteligencia Artificial</p>
-        </div>
-        <div class="field">
-          <span class="field-k">Contexto actual</span>
-          <p class="field-v">Tenemos un proyecto de gobernanza y también una encuesta de quién usa la inteligencia artificial.
-</p>
-        </div>
-        <div class="field">
-          <span class="field-k">Próximo paso</span>
-          <p class="field-v">El proximo paso es presentar lo que se obtuvo de la encuesta y unos quick wins para ir implementando la gobernanza</p>
-        </div></div>
-        <div class="p-work">
-          
-      <div class="block">
-        <h3 class="block-h"><span class="block-ic done-ic">&#10003;</span> Lo que ya está hecho <span class="block-n">2</span></h3>
-        <ul class="list done-list">
-          
-          <li><span class="tick">&#10003;</span><span><strong>Revisar y presentar la presentación</strong></span></li><li><span class="tick">&#10003;</span><span><strong>Hacer la estructura del semáforo - Presentar la encuesta con los datos nuevos</strong></span></li>
-        </ul>
-      </div>
-          
-      <div class="block">
-        <h3 class="block-h"><span class="block-ic pend-ic">!</span> Pendiente por hacer <span class="block-n">1</span></h3>
-        <ul class="list pend-list">
-          <li>
-              <span class="dot"></span>
-              <div class="pend-body">
-                <span class="pend-title">Empezar el piloto del semáforo - Conocer nuevos datos de encuesta</span>
-                <span class="pend-meta"><span class="due ">1 jul 2026 · en 8d</span><span class="status-pill">Próximo</span><span class="prio-pill mid">Media</span></span>
-              </div>
-            </li>
-        </ul>
-      </div>
-          
-      <div class="block docs">
-        <h3 class="block-h"><span class="block-ic doc-ic">&para;</span> Documentación y enlaces</h3>
-        
-        <div class="doc-grid">
-          <a class="doc-card" href="https://epublicidad-my.sharepoint.com/:p:/g/personal/estebancr_elcolombiano_com_co/IQDJclwdhmxES7aDxP2BlNlZAQmy414f00b-YrKFngEQChk?e=0qNJuP" target="_blank" rel="noopener">
-            <span class="doc-kind">Power point</span>
-            <span class="doc-label">Presentación gobernanza IA</span>
-            <span class="doc-host">epublicidad-my.sharepoint.com &#8599;</span>
-          </a><a class="doc-card" href="https://epublicidad-my.sharepoint.com/:w:/g/personal/estebancr_elcolombiano_com_co/IQB6NqoTf7hERbgxQMW_nW9OAYmt6WkNZXG_XLKuwz0gnwo?e=2GttLJ" target="_blank" rel="noopener">
-            <span class="doc-kind">doc</span>
-            <span class="doc-label">Semáforo arquitectura</span>
-            <span class="doc-host">epublicidad-my.sharepoint.com &#8599;</span>
-          </a>
-        </div>
-      </div>
-        </div>
-      </div>
-    </section>
+  <h2>Premios permitidos en esta fase</h2>
+  <p class="lead">Los premios comerciales quedan afuera: sal, conservantes y almidones que no le convienen. Estos sirven de recompensa después de cada medicamento, en pedacitos del tamaño de una uña.</p>
+  <div class="grid g3">
+    <div class="card"><h4><span class="tag t-green">Sí</span></h4><p><b>Pollo hervido</b> en cubitos mínimos. El premio estrella: es la misma proteína de su dieta.</p></div>
+    <div class="card"><h4><span class="tag t-green">Sí</span></h4><p><b>Ahuyama hervida</b> en cubitos. Dulce natural, fibra suave, sin riesgo.</p></div>
+    <div class="card"><h4><span class="tag t-green">Sí</span></h4><p><b>Cubitos de caldo casero congelado</b>, sin sal. Refrescante y sirve para hidratar.</p></div>
+    <div class="card"><h4><span class="tag t-amber">Cautela</span></h4><p><b>Zanahoria hervida</b> muy blanda. Solo si las heces ya están formadas; con restos vegetales +++ hoy no.</p></div>
+    <div class="card"><h4><span class="tag t-amber">Cautela</span></h4><p><b>Pescado blanco</b> en escamitas. Bueno, pero revisá espina por espina.</p></div>
+    <div class="card"><h4><span class="tag t-red">No</span></h4><p><b>Snacks comerciales, huesos, galletas</b>. Sal, fósforo y almidón. Ninguno le suma en esta fase.</p></div>
+  </div>
+</section>
 
-    <section class="project" id="p5" style="--d:0.24s">
-      <div class="p-head">
-        <div class="p-num">05</div>
-        <div class="p-titlewrap">
-          <h2 class="p-name">WordPress Multisite Conversaciones</h2>
-          <div class="p-badges">
-            <span class="badge front">Desarrollo</span>
-            <span class="badge role">Desarrollador</span>
-            <span class="badge status">En curso</span>
-            <span class="badge health warn">Requiere atención</span>
-            <span class="badge prio hi">Prioridad Alta</span>
-          </div>
-        </div>
-        <div class="p-counts">
-          <div class="cnt"><b>4</b><span>hechos</span></div>
-          <div class="cnt sep"><b>1</b><span>pendientes</span></div>
-        </div>
-      </div>
-      <div class="p-body">
-        <div class="p-context">
-        <div class="field">
-          <span class="field-k">Objetivo</span>
-          <p class="field-v">Migrar y consolidar los 4 sitios de Conversaciones bajo una arquitectura WordPress Multisite.</p>
-        </div>
-        <div class="field">
-          <span class="field-k">Contexto actual</span>
-          <p class="field-v">Ya el sitio está migrado y en funcionamiento. 
-Falta hacer la redirección de las urls viejas a las urls nuevas</p>
-        </div>
-        <div class="field">
-          <span class="field-k">Próximo paso</span>
-          <p class="field-v">Subir contenido a la nueva revista</p>
-        </div>
-        <div class="field">
-          <span class="field-k">Próximo hito</span>
-          <p class="field-v">Hacer redirecciones de urls viejas a las urls nuevas</p>
-        </div></div>
-        <div class="p-work">
-          
-      <div class="block">
-        <h3 class="block-h"><span class="block-ic done-ic">&#10003;</span> Lo que ya está hecho <span class="block-n">4</span></h3>
-        <ul class="list done-list">
-          <li><span class="tick">&#10003;</span><span>Ya el sitio está migrado y en funcionamiento.</span></li><li><span class="tick">&#10003;</span><span>Falta hacer la redirección de las urls viejas a las urls nuevas</span></li>
-          <li><span class="tick">&#10003;</span><span><strong>Pegar el prompt para hacer el plugin cuando tenga las imagenes de referencia</strong><em class="resol">El plugin está listo. 
+<!-- ============ CUIDADOS ============ -->
+<section class="panel" id="cuidados">
+  <h2>Lo que hay que tener listo antes de mañana</h2>
+  <div class="grid g2">
+    <div class="card">
+      <h4>Compras y preparación</h4>
+      <ul>
+        <li>Jeringas dosificadoras: al menos 3 (una por medicamento líquido) y repuestos.</li>
+        <li>Frasco de 1 litro con tapa, marcado, exclusivo para el Zoo Diar.</li>
+        <li>Marcador para escribir la fecha de preparación en el frasco.</li>
+        <li>Toallitas y trapos: van a caer chorros.</li>
+        <li>Pechuga de pollo para 2–3 días.</li>
+        <li>Un cuaderno o el bloc del celular para el registro diario.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4>Ajustes en la casa</h4>
+      <ul>
+        <li><b>Agua fresca en varios puntos</b> de la casa, cambiada varias veces al día. Con BUN 39 y orina poco concentrada, cada trago cuenta.</li>
+        <li><b>Salidas más frecuentes al baño.</b> Con diarrea y sin poder aguantar, el accidente en casa es del cuadro, no de él. Cero regaños.</li>
+        <li><b>Cama cerca y accesible</b>, sin escaleras de por medio.</li>
+        <li><b>Limpiar la zona perianal</b> con agua tibia después de cada deposición blanda; se irrita rapidísimo.</li>
+        <li><b>Temperatura estable.</b> Un perro deshidratado y viejo pierde calor fácil.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4>Qué anotar todos los días</h4>
+      <ul>
+        <li>Cuánto comió (aproximado, en porcentaje del plato).</li>
+        <li>Cuántas veces bebió agua.</li>
+        <li>Deposiciones: cuántas, consistencia (líquida / blanda / formada), color.</li>
+        <li>Vómitos: hora y contenido.</li>
+        <li>Orina: cuántas veces, color, si le cuesta.</li>
+        <li>Ánimo: activo / decaído / postrado.</li>
+        <li>Medicamentos: hora exacta y si lo tomó completo.</li>
+      </ul>
+      <p class="why"><b>Por qué:</b> el veterinario va a decidir la fase renal con estos datos. Un registro de 7 días vale más que cualquier descripción de memoria.</p>
+    </div>
+    <div class="card">
+      <h4>Preguntas para el veterinario mañana</h4>
+      <ul>
+        <li>¿La dieta blanda debería ser casera o una lata gastrointestinal comercial?</li>
+        <li>Con BUN 39, creatinina 1.8 y proteinuria ++, ¿hay que limitar ya la proteína o esperamos a la fase renal?</li>
+        <li>¿Cuándo repetimos el coprológico para ver si la Isospora cedió?</li>
+        <li>¿El Metronid puede darle náusea? ¿Se da con o sin comida?</li>
+        <li>¿Hasta qué punto puedo insistir con el Electro Zoo si lo rechaza?</li>
+        <li>¿Qué señal me dice que hay que adelantar la consulta en vez de esperar los 7 días?</li>
+      </ul>
+    </div>
+  </div>
 
-Se llama EAFIT quiz. Y ya las notas también subieron con el quiz, las notas que estaban pendientes están ok 
-</em></span></li><li><span class="tick">&#10003;</span><span><strong>Enseñarle a Santiago a pasar las preguntas y quiz</strong></span></li>
-        </ul>
-      </div>
-          
-      <div class="block">
-        <h3 class="block-h"><span class="block-ic pend-ic">!</span> Pendiente por hacer <span class="block-n">1</span></h3>
-        <ul class="list pend-list">
-          <li>
-              <span class="dot"></span>
-              <div class="pend-body">
-                <span class="pend-title">Pasar las nuevas notas que se están desarrollando</span>
-                <span class="pend-meta"><span class="due ">2 jul 2026 · en 9d</span><span class="status-pill">Próximo</span><span class="prio-pill mid">Media</span></span>
-              </div>
-            </li>
-        </ul>
-      </div>
-          
-      <div class="block docs">
-        <h3 class="block-h"><span class="block-ic doc-ic">&para;</span> Documentación y enlaces</h3>
-        
-        <div class="doc-grid">
-          <a class="doc-card" href="https://epublicidad-my.sharepoint.com/:w:/r/personal/estebancr_elcolombiano_com_co/_layouts/15/Doc.aspx?sourcedoc=%7B86AF953A-76C5-4B13-ABE4-D85D2C2FFD92%7D&amp;file=Quices.docx&amp;action=default&amp;mobileredirect=true&amp;wdOrigin=OFFICEDOTCOM.SHELL%2CAPPHOME-WEB.BANNER.UPLOAD&amp;wdPreviousSession=f8dc58b2-d04c-4954-8980-474185885f3b&amp;wdPreviousSessionSrc=AppHomeWeb&amp;ct=1781918422061" target="_blank" rel="noopener">
-            <span class="doc-kind">Blog o internet</span>
-            <span class="doc-label">Documento quices y logica</span>
-            <span class="doc-host">epublicidad-my.sharepoint.com &#8599;</span>
-          </a><a class="doc-card" href="https://epublicidad-my.sharepoint.com/:x:/r/personal/estebancr_elcolombiano_com_co/_layouts/15/Doc.aspx?sourcedoc=%7B0098245C-AD7C-4CC8-85F0-069A941B9D6D%7D&amp;file=Eafit%20-%20Migraci%C3%B3n%20de%20notas.xlsx&amp;action=default&amp;mobileredirect=true&amp;DefaultItemOpen=1&amp;wdOrigin=OFFICECOM-WEB.APPGALLERY%2CAPPHOME-WEB.FILEBROWSER.RECENT&amp;wdPreviousSession=5e19b76e-5210-4bac-ab83-abc61fff9a26&amp;wdPreviousSessionSrc=AppHomeWeb&amp;ct=1782252584339" target="_blank" rel="noopener">
-            <span class="doc-kind">excel</span>
-            <span class="doc-label">URL sitio pasado</span>
-            <span class="doc-host">epublicidad-my.sharepoint.com &#8599;</span>
-          </a>
-        </div>
-      </div>
-        </div>
-      </div>
-    </section>
+  <h2>Señales de alarma</h2>
+  <div class="alert">
+    <h4>Llamar al veterinario el mismo día</h4>
+    <ul>
+      <li>No come <b>nada</b> por más de 24 horas.</li>
+      <li>Vómito repetido, o vomita el agua.</li>
+      <li>Deja de orinar, o la orina se vuelve muy oscura o muy escasa.</li>
+      <li>Sangre en la deposición o deposición negra tipo alquitrán.</li>
+      <li>Encías pálidas, secas o pegajosas.</li>
+      <li>Pliegue de la piel del lomo que tarda en volver (deshidratación).</li>
+      <li>Decaimiento marcado, temblor, tambaleo o desorientación.</li>
+      <li>Aliento con olor a amoníaco o úlceras en la boca.</li>
+      <li>Tos o respiración ruidosa después de darle un líquido por jeringa.</li>
+    </ul>
+  </div>
+</section>
 
-    <section class="project" id="p6" style="--d:0.3s">
-      <div class="p-head">
-        <div class="p-num">06</div>
-        <div class="p-titlewrap">
-          <h2 class="p-name">Dashboard de métricas de lectura</h2>
-          <div class="p-badges">
-            <span class="badge front">Líder IA</span>
-            <span class="badge role">Líder</span>
-            <span class="badge status">En curso</span>
-            <span class="badge health warn">Requiere atención</span>
-            <span class="badge prio mid">Prioridad Media</span>
-          </div>
-        </div>
-        <div class="p-counts">
-          <div class="cnt"><b>1</b><span>hechos</span></div>
-          <div class="cnt sep"><b>0</b><span>pendientes</span></div>
-        </div>
-      </div>
-      <div class="p-body">
-        <div class="p-context">
-        <div class="field">
-          <span class="field-k">Objetivo</span>
-          <p class="field-v">Construir una fuente confiable de métricas reales de lectura para potenciar las decisiones del equipo editorial.</p>
-        </div>
-        <div class="field">
-          <span class="field-k">Próximo paso</span>
-          <p class="field-v">El equipo editorial no tiene visibilidad sobre cómo se consumen realmente los artículos. Las decisiones se toman con datos parciales de GA4 que no reflejan lectura real.</p>
-        </div></div>
-        <div class="p-work">
-          
-      <div class="block">
-        <h3 class="block-h"><span class="block-ic done-ic">&#10003;</span> Lo que ya está hecho <span class="block-n">1</span></h3>
-        <ul class="list done-list">
-          
-          <li><span class="tick">&#10003;</span><span><strong>Corregir lo que nos pasó Laura</strong><em class="resol">Eso no es un error. Se validó que lo que no le cuadra son las métricas. Pero nada. Siento que van a seguir saliendo cosas así pero ya lo volveré proyecto</em></span></li>
-        </ul>
-      </div>
-          
-      <div class="block">
-        <h3 class="block-h"><span class="block-ic pend-ic clear">&#10003;</span> Pendiente por hacer <span class="block-n">0</span></h3>
-        <p class="empty">Sin pendientes abiertos. Al día.</p>
-      </div>
-          
-        </div>
-      </div>
-    </section>
+<!-- ============ CHECKLIST ============ -->
+<section class="panel" id="checklist">
+  <h2>Checklist del día</h2>
+  <p class="lead">Marcá a medida que avanza el día. Es solo para la sesión de hoy: al recargar la página vuelve a empezar en blanco, que es justo lo que querés cada mañana.</p>
+  <div class="card" id="cl"></div>
+  <p class="count" id="clcount" style="margin-top:12px"></p>
+</section>
 
-    <section class="project" id="p7" style="--d:0.36s">
-      <div class="p-head">
-        <div class="p-num">07</div>
-        <div class="p-titlewrap">
-          <h2 class="p-name">Marcas aliadas V2</h2>
-          <div class="p-badges">
-            <span class="badge front">Desarrollo</span>
-            <span class="badge role">Desarrollador</span>
-            <span class="badge status">En curso</span>
-            <span class="badge health ok">En orden</span>
-            <span class="badge prio mid">Prioridad Media</span>
-          </div>
-        </div>
-        <div class="p-counts">
-          <div class="cnt"><b>1</b><span>hechos</span></div>
-          <div class="cnt sep"><b>2</b><span>pendientes</span></div>
-        </div>
-      </div>
-      <div class="p-body">
-        <div class="p-context">
-        <div class="field">
-          <span class="field-k">Objetivo</span>
-          <p class="field-v">Migrar un desarrollo hecho en wordpress para su propia administración </p>
-        </div>
-        <div class="field">
-          <span class="field-k">Próximo paso</span>
-          <p class="field-v">Mostrarles en la capacitación como funciona el sitio</p>
-        </div></div>
-        <div class="p-work">
-          
-      <div class="block">
-        <h3 class="block-h"><span class="block-ic done-ic">&#10003;</span> Lo que ya está hecho <span class="block-n">1</span></h3>
-        <ul class="list done-list">
-          
-          <li><span class="tick">&#10003;</span><span><strong>Corregir filtro y paginación de marcas aliadas y subir favicon</strong></span></li>
-        </ul>
-      </div>
-          
-      <div class="block">
-        <h3 class="block-h"><span class="block-ic pend-ic">!</span> Pendiente por hacer <span class="block-n">2</span></h3>
-        <ul class="list pend-list">
-          <li>
-              <span class="dot"></span>
-              <div class="pend-body">
-                <span class="pend-title">Pegar formulario para nuevas marcas - No lo han pasado</span>
-                <span class="pend-meta"><span class="due ">1 jul 2026 · en 8d</span><span class="status-pill">Próximo</span><span class="prio-pill mid">Media</span></span>
-              </div>
-            </li><li>
-              <span class="dot"></span>
-              <div class="pend-body">
-                <span class="pend-title">Reunión de capacitación con Contenido</span>
-                <span class="pend-meta"><span class="due nodate">sin fecha</span><span class="status-pill">Esperando respuesta</span><span class="prio-pill mid">Media</span></span>
-              </div>
-            </li>
-        </ul>
-      </div>
-          
-        </div>
-      </div>
-    </section>
-
-    <section class="project" id="p8" style="--d:0.42s">
-      <div class="p-head">
-        <div class="p-num">08</div>
-        <div class="p-titlewrap">
-          <h2 class="p-name">Proyecto Bancolombia Inmobiliaria</h2>
-          <div class="p-badges">
-            <span class="badge front">Líder IA</span>
-            <span class="badge role">Desarrollador</span>
-            <span class="badge status">En curso</span>
-            <span class="badge health ok">En orden</span>
-            <span class="badge prio mid">Prioridad Media</span>
-          </div>
-        </div>
-        <div class="p-counts">
-          <div class="cnt"><b>1</b><span>hechos</span></div>
-          <div class="cnt sep"><b>1</b><span>pendientes</span></div>
-        </div>
-      </div>
-      <div class="p-body">
-        <div class="p-context">
-        <div class="field">
-          <span class="field-k">Objetivo</span>
-          <p class="field-v">Integrar todo lo de tu360inmobiliario</p>
-        </div>
-        <div class="field">
-          <span class="field-k">Contexto actual</span>
-          <p class="field-v">Existe el scrapper y existe todo lo demás del desarrollo pero falta definir el formulario para las propiedades y para ponerle perfil al usuario</p>
-        </div>
-        <div class="field">
-          <span class="field-k">Próximo paso</span>
-          <p class="field-v">Definir fomrulario y perfil de usuario para hacer la aplicación</p>
-        </div></div>
-        <div class="p-work">
-          
-      <div class="block">
-        <h3 class="block-h"><span class="block-ic done-ic">&#10003;</span> Lo que ya está hecho <span class="block-n">1</span></h3>
-        <ul class="list done-list">
-          
-          <li><span class="tick">&#10003;</span><span><strong>Reunión con Deivy para Test Coba</strong></span></li>
-        </ul>
-      </div>
-          
-      <div class="block">
-        <h3 class="block-h"><span class="block-ic pend-ic">!</span> Pendiente por hacer <span class="block-n">1</span></h3>
-        <ul class="list pend-list">
-          <li>
-              <span class="dot"></span>
-              <div class="pend-body">
-                <span class="pend-title">Pasan la caracterización de usuario y el formulario para terminar el desarrollo</span>
-                <span class="pend-meta"><span class="due soon">30 jun 2026 · en 7d</span><span class="status-pill">Próximo</span><span class="prio-pill mid">Media</span></span>
-              </div>
-            </li>
-        </ul>
-      </div>
-          
-      <div class="block docs">
-        <h3 class="block-h"><span class="block-ic doc-ic">&para;</span> Documentación y enlaces</h3>
-        <p class="tech-note">No existe documentación técnica</p>
-        <div class="doc-grid">
-          <a class="doc-card" href="https://www.perplexity.ai/computer/a/ffcadf3c-ce0b-568e-ab4e-8770b25ff001" target="_blank" rel="noopener">
-            <span class="doc-kind">Blog o internet</span>
-            <span class="doc-label">Link del formulario clasificación</span>
-            <span class="doc-host">perplexity.ai &#8599;</span>
-          </a>
-        </div>
-      </div>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <footer>
-    <div class="mark">Todo queda en orden. Tu tranquilo</div>
-  </footer>
+<footer>
+  Datos de laboratorio: VETS Bogotá D.C., orden 067016-184, toma 2026-07-02. Fórmula según veterinario tratante.
+  Esta guía es una herramienta de organización doméstica; no sustituye criterio veterinario.
+</footer>
 
 </div>
+
+<script>
+/* ---------- TABS ---------- */
+document.querySelectorAll('.tab').forEach(t=>{
+  t.addEventListener('click',()=>{
+    document.querySelectorAll('.tab').forEach(x=>x.setAttribute('aria-selected','false'));
+    document.querySelectorAll('.panel').forEach(p=>p.classList.remove('on'));
+    t.setAttribute('aria-selected','true');
+    document.getElementById(t.dataset.p).classList.add('on');
+    window.scrollTo({top:0,behavior:'smooth'});
+  });
+});
+
+/* ---------- FOODS ---------- */
+const FOODS=[
+ {n:'Pechuga de pollo hervida',c:'si',d:'Sin piel, sin hueso, sin sal. Desmechada fina.',w:'Proteína magra y altamente digerible: la base de la fase blanda.'},
+ {n:'Pavo magro hervido',c:'si',d:'Sin piel ni condimento.',w:'Alternativa cuando se cansa del pollo, con el mismo perfil digestible.'},
+ {n:'Pescado blanco hervido',c:'si',d:'Tilapia o basa, revisando espinas una por una.',w:'Olor fuerte que ayuda con el apetito; proteína suave para el intestino.'},
+ {n:'Arroz blanco muy cocido',c:'si',d:'Pasado de cocción, poca cantidad.',w:'Almidón bien gelatinizado se digiere; el mal cocido alimenta las levaduras (+++).'},
+ {n:'Ahuyama / calabaza hervida',c:'si',d:'En puré, sin cáscara ni semillas.',w:'Fibra soluble que ayuda a formar heces blandas sin irritar.'},
+ {n:'Papa pelada y hervida',c:'si',d:'En puré, sin cáscara. Nunca cruda ni verde.',w:'Almidón suave y aceptable en poca cantidad. La papa cruda o verde tiene solanina.'},
+ {n:'Clara de huevo cocida',c:'si',d:'Cocida, nunca cruda.',w:'Proteína de alto valor. Cruda trae riesgo de salmonela y bloquea la biotina.'},
+ {n:'Caldo de pollo casero sin sal',c:'si',d:'Sin cebolla, ajo ni cubito.',w:'Hidrata, aporta olor y sirve para enmascarar el sabor de los medicamentos.'},
+ {n:'Agua fresca',c:'si',d:'Disponible siempre, en varios puntos, cambiada seguido.',w:'Con BUN 39, creatinina 1.8 y densidad urinaria 1010, la hidratación es central.'},
+
+ {n:'Yema de huevo',c:'cautela',d:'Cocida y en muy poca cantidad.',w:'Buena, pero grasa y con fósforo: con riñón comprometido, mejor limitarla.'},
+ {n:'Zanahoria hervida',c:'cautela',d:'Muy blanda. Solo cuando las heces estén formadas.',w:'Con restos vegetales +++ hoy en el coprológico, más fibra vegetal es contraproducente.'},
+ {n:'Yogur natural sin azúcar',c:'cautela',d:'Cucharaditas, y solo si el veterinario lo aprueba.',w:'Aporta probióticos, pero es lactosa: muchos perros no la digieren y ya hay diarrea. Además el Gut Star ya cubre esa función.'},
+ {n:'Avena cocida en agua',c:'cautela',d:'Muy cocida, poca cantidad.',w:'Fibra útil, pero es carbohidrato y hay azúcares reductores positivos. Consultar antes.'},
+ {n:'Banano',c:'cautela',d:'Rodaja fina y ocasional.',w:'Azúcar rápida que alimenta levaduras y potasio alto: dos cosas a vigilar acá.'},
+ {n:'Manzana sin semillas ni cáscara',c:'cautela',d:'Trocito ocasional.',w:'Las semillas contienen cianuro. La pulpa es azúcar; hoy suma poco.'},
+ {n:'Carne de res magra',c:'cautela',d:'Hervida y desgrasada.',w:'Más grasa y más difícil de digerir que el pollo. Mejor esperar a que el cuadro ceda.'},
+ {n:'Arroz integral',c:'cautela',d:'Preferible evitarlo en esta fase.',w:'La fibra insoluble irrita un intestino inflamado. El blanco es mejor ahora.'},
+ {n:'Alimento comercial de siempre',c:'cautela',d:'No reintroducir hasta que el veterinario lo indique.',w:'Volver de golpe al alimento habitual es la causa más común de recaída.'},
+ {n:'Snacks y premios comerciales',c:'cautela',d:'Suspender durante la fase.',w:'Sal, fósforo, conservantes y almidones. Nada de eso ayuda al riñón ni al intestino.'},
+
+ {n:'Chocolate',c:'no',d:'Tóxico. Cualquier cantidad, cualquier tipo.',w:'Teobromina: arritmias, convulsiones. El amargo es el peor.'},
+ {n:'Uvas y pasas',c:'no',d:'Tóxico. Ni una.',w:'Causan falla renal aguda. Con el riñón de Tommy ya comprometido, es el peor alimento posible.'},
+ {n:'Cebolla, ajo, puerro, cebollín',c:'no',d:'Tóxico, incluso cocido, en polvo o en caldo.',w:'Destruyen los glóbulos rojos. Por esto el caldo de cubito comercial queda descartado.'},
+ {n:'Xilitol (endulzante)',c:'no',d:'Tóxico. En chicles, dulces, cremas dentales, algunas cremas de maní.',w:'Hipoglicemia severa y falla hepática. Leé la etiqueta de todo lo que sea "sin azúcar".'},
+ {n:'Aguacate',c:'no',d:'Tóxico.',w:'Persina: vómito y diarrea. Y el cuesco es riesgo de obstrucción.'},
+ {n:'Alcohol',c:'no',d:'Tóxico en cualquier cantidad.',w:'Depresión del sistema nervioso central. Cero.'},
+ {n:'Café, té, bebidas con cafeína',c:'no',d:'Tóxico.',w:'Cafeína: taquicardia y temblores.'},
+ {n:'Macadamias y nueces en general',c:'no',d:'Tóxico / riesgo alto.',w:'Debilidad, temblores, hipertermia. Otras nueces traen grasa y riesgo de obstrucción.'},
+ {n:'Huesos cocidos',c:'no',d:'Peligro mecánico.',w:'Se astillan y perforan el tubo digestivo. Un hueso de pollo cocido es de lo más peligroso que hay.'},
+ {n:'Masa cruda con levadura',c:'no',d:'Peligro grave.',w:'Fermenta en el estómago produciendo gas y alcohol: dilatación gástrica.'},
+ {n:'Leche y lácteos',c:'no',d:'Evitar en esta fase.',w:'La lactosa empeora la diarrea. Y el queso suma sal y fósforo: pésimo con proteinuria.'},
+ {n:'Embutidos: salchichón, jamón, salchicha',c:'no',d:'Evitar por completo.',w:'Sal y fósforo altísimos. Es la tentación clásica para esconder pastillas y justo la peor idea acá.'},
+ {n:'Frituras, comida grasosa, sobras humanas',c:'no',d:'Evitar por completo.',w:'La grasa dispara diarrea y riesgo de pancreatitis en un intestino ya inflamado.'},
+ {n:'Comida con sal o condimentos',c:'no',d:'Nada de sal, cubitos ni aliños.',w:'El sodio es carga directa para un riñón senil con proteinuria.'},
+ {n:'Azúcar, dulces, panadería',c:'no',d:'Evitar por completo.',w:'Con azúcares reductores positivos y levaduras +++, el azúcar es combustible para lo que estamos tratando de bajar.'},
+ {n:'Alimento crudo (dieta BARF)',c:'no',d:'No en esta fase.',w:'Carga bacteriana sobre una disbiosis ya instalada y un sistema inmune con leucopenia (5.300).'},
+ {n:'Medicamentos humanos',c:'no',d:'Nunca sin indicación veterinaria.',w:'Ibuprofeno, acetaminofén, aspirina: nefrotóxicos o hepatotóxicos. Con creatinina 1.8 pueden ser fatales.'}
+];
+
+const LBL={si:['Sí','t-green'],cautela:['Con cautela','t-amber'],no:['Nunca','t-red']};
+let F='todos', Q='';
+
+function render(){
+  const box=document.getElementById('foods');
+  const list=FOODS.filter(f=>{
+    const okF = F==='todos'||f.c===F;
+    const s=(f.n+' '+f.d+' '+f.w).toLowerCase();
+    return okF && s.includes(Q);
+  });
+  box.innerHTML=list.map(f=>`
+    <div class="food ${f.c}">
+      <div class="food-top">
+        <div class="food-name">${f.n}</div>
+        <span class="tag ${LBL[f.c][1]}">${LBL[f.c][0]}</span>
+      </div>
+      <p>${f.d}</p>
+      <div class="why"><b>Por qué en el caso de Tommy:</b> ${f.w}</div>
+    </div>`).join('');
+  document.getElementById('none').style.display=list.length?'none':'block';
+  const t={si:0,cautela:0,no:0}; list.forEach(f=>t[f.c]++);
+  document.getElementById('count').textContent =
+    `${list.length} de ${FOODS.length} alimentos · ${t.si} sí · ${t.cautela} con cautela · ${t.no} nunca`;
+}
+document.querySelectorAll('.chip').forEach(c=>{
+  c.addEventListener('click',()=>{
+    document.querySelectorAll('.chip').forEach(x=>x.setAttribute('aria-pressed','false'));
+    c.setAttribute('aria-pressed','true'); F=c.dataset.f; render();
+  });
+});
+document.getElementById('q').addEventListener('input',e=>{Q=e.target.value.toLowerCase().trim();render();});
+render();
+
+/* ---------- SCHEDULE ---------- */
+const C={met:'var(--brick)',pro:'var(--moss)',zd:'var(--ocean)',ez:'var(--amber)',food:'#8a7fb0'};
+const SLOTS=[
+ ['06:00',[['ez','Electro Zoo · 20 ml','Primera toma del día, con calma.']]],
+ ['08:00',[['met','Metronid · 1 ml','Dosis única del día. Desde acá, 5 horas sin probiótico.'],
+           ['zd','Zoo Diar · 10 ml','De la solución preparada esta mañana.'],
+           ['food','Comida 1','Porción pequeña, tibia.']]],
+ ['10:00',[['ez','Electro Zoo · 20 ml','']]],
+ ['13:00',[['food','Comida 2','Porción pequeña.']]],
+ ['14:00',[['pro','Br Vet Gut Star · ½ sobre','5 h después del Metronid. Mezclado en la comida.'],
+           ['ez','Electro Zoo · 20 ml',''],
+           ['food','Comida 3','Aquí va el probiótico mezclado.']]],
+ ['16:00',[['zd','Zoo Diar · 10 ml','Segunda toma.']]],
+ ['18:00',[['ez','Electro Zoo · 20 ml',''],
+           ['food','Comida 4','Última comida sólida del día.']]],
+ ['21:00',[['pro','Br Vet Gut Star · ½ sobre','Segunda dosis, con un bocado de comida. Lejos del Metronid de la mañana.'],
+           ['ez','Electro Zoo · 20 ml','Última si el sueño ya llegó.']]],
+ ['00:00',[['zd','Zoo Diar · 10 ml','Tercera toma. Si duerme profundo, hablalo con el veterinario antes de despertarlo.']]]
+];
+document.getElementById('sched').innerHTML=SLOTS.map(([h,evs])=>`
+  <div class="slot">
+    <div class="slot-h">${h}</div>
+    <div class="slot-b">
+      ${evs.map(([k,t,d])=>`<div class="ev"><span class="bar" style="background:${C[k]}"></span>
+        <span><span class="ev-t">${t}</span>${d?`<span class="ev-d">${d}</span>`:''}</span></div>`).join('')}
+    </div>
+  </div>`).join('');
+
+/* ---------- MEDS ---------- */
+const MEDS=[
+ {n:'Metronid',t:'Antibiótico / antiprotozoario',c:'t-red',
+  s:[['Dosis','1 ml'],['Vía','Oral'],['Frecuencia','Cada 24 h'],['Duración','7 días']],
+  r:'Separar mínimo 5 horas del Br Vet Gut Star. Si se dan juntos, el antibiótico anula el probiótico.'},
+ {n:'Br Vet Gut Star',t:'Suplemento probiótico',c:'t-green',
+  s:[['Dosis','½ sobre'],['Vía','Oral'],['Frecuencia','Cada 12 h'],['Duración','5 días']],
+  r:'Se administra con las comidas. Mínimo 5 horas de separación del Metronid.'},
+ {n:'Zoo Diar',t:'Antidiarreico / rehidratante oral',c:'t-blue',
+  s:[['Dosis','10 ml'],['Vía','Oral'],['Frecuencia','Cada 8 h'],['Duración','7 días']],
+  r:'Disolver el sobre completo en 1 litro de agua. De esa solución salen los 10 ml de cada toma.'},
+ {n:'Electro Zoo',t:'Electrolitos / soporte de hidratación',c:'t-amber',
+  s:[['Dosis','20 ml'],['Vía','Oral'],['Frecuencia','Cada 4 h'],['Duración','Todo el tratamiento']],
+  r:'La frecuencia es una meta, no una obligación: se ajusta a la tolerancia. Se da los días que se pueda.'}
+];
+document.getElementById('meds').innerHTML=MEDS.map(m=>`
+  <div class="med">
+    <div class="med-h">
+      <div><div class="med-n">${m.n}</div><div class="med-t">${m.t}</div></div>
+      <span class="tag ${m.c}">${m.s[2][1]}</span>
+    </div>
+    <div class="med-specs">${m.s.map(([k,v])=>`<div class="spec"><dt>${k}</dt><dd>${v}</dd></div>`).join('')}</div>
+    <div class="rule">${m.r}</div>
+  </div>`).join('');
+
+/* ---------- CHECKLIST ---------- */
+const CL=[
+ ['Preparar el Zoo Diar del día','Sobre completo en 1 litro de agua, frasco marcado con la fecha.'],
+ ['Preparar o calentar la comida','Tibia, desmechada, porciones chicas.'],
+ ['Metronid · 1 ml','Anotar la hora exacta: define la ventana del probiótico.'],
+ ['Br Vet Gut Star · ½ sobre (1ª)','Con comida, mínimo 5 h después del Metronid.'],
+ ['Br Vet Gut Star · ½ sobre (2ª)','Con comida, 12 h después de la primera.'],
+ ['Zoo Diar · 10 ml (1ª)',''],
+ ['Zoo Diar · 10 ml (2ª)',''],
+ ['Zoo Diar · 10 ml (3ª)',''],
+ ['Electro Zoo · las tomas que se pudieron','Anotar cuántas salieron.'],
+ ['Comidas del día','Anotar cuánto comió de cada una.'],
+ ['Agua cambiada y disponible','Varios puntos de la casa.'],
+ ['Salidas al baño','Anotar número y consistencia de las deposiciones.'],
+ ['Limpieza de la zona perianal','Agua tibia después de cada deposición blanda.'],
+ ['Registro del día completo','Comida, agua, heces, orina, vómito, ánimo, medicamentos.']
+];
+document.getElementById('cl').innerHTML=CL.map((c,i)=>`
+  <div class="check">
+    <input type="checkbox" id="c${i}">
+    <label for="c${i}">${c[0]}${c[1]?`<span class="cd">${c[1]}</span>`:''}</label>
+  </div>`).join('');
+function clc(){
+  const all=document.querySelectorAll('#cl input');
+  const done=[...all].filter(x=>x.checked).length;
+  document.getElementById('clcount').textContent=`${done} de ${all.length} completados`;
+}
+document.querySelectorAll('#cl input').forEach(x=>x.addEventListener('change',clc));
+clc();
+</script>
 </body>
 </html>
